@@ -31,6 +31,7 @@ CREATE TABLE administradores(
 
 CREATE TABLE jornadas(
 	codigo serial primary key,
+	fk_codigo_empresa int references empresas(codigo),
 	nome varchar
 );
 
