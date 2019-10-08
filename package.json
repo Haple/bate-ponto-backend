@@ -1,23 +1,14 @@
 {
   "name": "bate-ponto-backend",
   "version": "1.0.0",
-  "description": "Bate Ponto Backend",
-  "main": "index.js",
-  "scripts": {
-    "start":"node index.js",
-    "start:dev":"nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "bate-ponto-backend",
+  "main": "src/server.js",
+  "repository": "https://github.com/Haple/bate-ponto-backend.git",
+  "author": "Aleph Santos Oliveira <aleph.oliveira@etec.sp.gov.br>",
+  "license": "MIT",
+  "scripts":{
+    "dev": "nodemon src/server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Haple/bate-ponto-backend.git"
-  },
-  "author": "Aleph Santos Oliveira",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Haple/bate-ponto-backend/issues"
-  },
-  "homepage": "https://github.com/Haple/bate-ponto-backend#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
