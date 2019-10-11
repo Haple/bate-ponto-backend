@@ -11,12 +11,14 @@ const stringDeConexao =
 +`:${process.env.DB_PORT}`
 +`/${process.env.DB_DATABASE}`;
 
-console.log(stringDeConexao);
-
 const pool = new Pool({
 	connectionString: 
 		ehProducao ? process.env.DATABASE_URL : stringDeConexao,
 	ssl: ehProducao
 });
 
-module.exports = { pool };
+module.exports = {
+	query: (text, params)=>{
+		return pool.query(text, params);
+	}
+};

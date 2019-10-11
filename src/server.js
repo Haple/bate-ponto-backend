@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const empresa = require('./empresa');
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(cors());
 app.get('/', (requisicao, resposta) => {
 	resposta.json({status: 'DE PÉ!'});
 });
+app.use('/empresas', empresa);
 
 app.listen(process.env.PORT || 3000, () => {
 	console.log("Servidor iniciado com sucesso");
