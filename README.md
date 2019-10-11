@@ -35,6 +35,8 @@
 	- [ ] (Opcional) Enviar relatório automático
 	- [ ] (Opcional) Alerta de atrasos
 
+# Pastas, controllers e métodos
+```
 
 empresa
 	EmpresaController
@@ -85,3 +87,4 @@ banco
 //pai: abono.use("/:abono_id/avaliacoes", AvaliacaoController);
 //filho: const avaliacao = express.Router({mergeParams: true});
 
+```
