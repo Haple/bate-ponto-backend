@@ -72,18 +72,14 @@ abono
 
 	AdminAbonoController
 	-index: listar abonos da empresa
-	
-	avalicao
-		AvaliacaoController
-		-index: lista avaliações de um abono
-		-store: criar avaliação p/ um abono
+	-store: criar avaliação p/ um abono
 
 banco
 	BancoDeHorasController
 	-show: banco de horas do empregado
 
 
-//só pra lembrar
+//só pra lembrar, caso precise
 //pai: abono.use("/:abono_id/avaliacoes", AvaliacaoController);
 //filho: const avaliacao = express.Router({mergeParams: true});
 
