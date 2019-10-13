@@ -1,7 +1,6 @@
 DROP TABLE avaliacoes_abono;
 DROP TABLE abonos;
 DROP TABLE pontos;
-DROP TABLE horarios;
 DROP TABLE empregados;
 DROP TABLE jornadas;
 DROP TABLE administradores;
@@ -32,15 +31,14 @@ CREATE TABLE administradores(
 CREATE TABLE jornadas(
 	codigo serial primary key,
 	cod_empresa int references empresas,
-	nome varchar
+	nome varchar,
+	entrada1 time,
+	saida1 time,
+	entrada2 time,
+	saida2 time,
+	qtd_horas_diarias time
 );
 
-CREATE TABLE horarios(
-	codigo serial primary key,
-	dia_semana int,
-	horario time,
-	cod_jornada int references jornadas
-);
 
 CREATE TABLE empregados(
 	enviar_lembrete boolean,
@@ -61,16 +59,14 @@ CREATE TABLE abonos(
 	codigo serial primary key,
 	motivo varchar,
 	anexo bytea,
-	criado_em timestamp,
+	data_solicitacao timestamp,
 	data_abonada date,
 	cod_empregado int references empregados
 );
 
 CREATE TABLE avaliacoes_abono(
-	codigo serial primary key,
-	status varchar,
+	aprovado boolean,
 	motivo varchar,
-	criado_em timestamp,
-	cod_abono int references abonos,
+	cod_abono int primary key references abonos,
 	cod_admin int references administradores
 );

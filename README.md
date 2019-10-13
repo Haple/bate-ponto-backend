@@ -18,10 +18,9 @@
 
 - [ ] Mobile
 	- [ ] Login empregado (Aleph)
-	- [ ] Bater ponto (Gabriel)
+	- [ ] Bater ponto (Mobile: Gabriel, Backend: Daniel)
 	- [ ] Listar pontos (Gabriel)
 	- [ ] Pedir abono (Daniel)
-	- [ ] Exibir banco de horas (Daniel)
 	- [ ] (Opcional) Lembrete de ponto
 	
 - [ ] Web
@@ -74,13 +73,30 @@ abono
 	-index: listar abonos da empresa
 	-store: criar avaliação p/ um abono
 
-banco
-	BancoDeHorasController
-	-show: banco de horas do empregado
-
-
-//só pra lembrar, caso precise
-//pai: abono.use("/:abono_id/avaliacoes", AvaliacaoController);
-//filho: const avaliacao = express.Router({mergeParams: true});
-
 ```
+
+
+# Pseudocódigos
+
+## bate ponto
+registra novo ponto
+
+busca qtd de horas diarias do empregado
+busca os pontos que o empregado já bateu hoje
+pontos = [
+		{hora:7,...},
+		{hora:11,...},
+		{hora:13,...},
+		{hora:18,...}		
+	]
+separa em entradas e saidas
+entradas = [{hora:7},{hora:13}]
+saidas = [{hora:11},{hora:18}]
+horas trabalhadas = 0
+se a qtd de saidas for maior que 0
+	para cada saida
+		horas trabalhadas += saida - entrada
+saldo do dia = horas trabalhadas - horas diarias
+atualiza banco de horas do empregado
+		
+
