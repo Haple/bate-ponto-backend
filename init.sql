@@ -18,6 +18,7 @@ CREATE TABLE usuarios(
 	cpf varchar,
 	nome varchar,
 	email varchar,
+	confirmado boolean,
 	senha varchar,
 	celular varchar,
 	cod_empresa int references empresas
