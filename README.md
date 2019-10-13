@@ -45,7 +45,7 @@ sessao
 	SessaoController
 	-store: login usuários
 
-empresa
+empregado
 	EmpregadoController
 	-index: listar empregados
 	-show: exibir empregado
