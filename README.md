@@ -79,8 +79,10 @@ abono
 # Pseudocódigos
 
 ## bate ponto
-registra novo ponto
 
+```
+
+registra novo ponto
 busca qtd de horas diarias do empregado
 busca os pontos que o empregado já bateu hoje
 pontos = [
@@ -99,4 +101,4 @@ se a qtd de saidas for maior que 0
 saldo do dia = horas trabalhadas - horas diarias
 atualiza banco de horas do empregado
 		
-
+```
