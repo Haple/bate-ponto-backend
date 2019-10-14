@@ -6,11 +6,13 @@
   "repository": "https://github.com/Haple/bate-ponto-backend.git",
   "author": "Aleph Santos Oliveira <aleph.oliveira@etec.sp.gov.br>",
   "license": "MIT",
-  "scripts":{
+  "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js"
   },
   "dependencies": {
+    "@brazilian-utils/is-valid-cnpj": "^1.0.0-alpha.3",
+    "@brazilian-utils/is-valid-cpf": "^1.0.0-alpha.3",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",

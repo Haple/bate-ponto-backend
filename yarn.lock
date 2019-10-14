@@ -2,6 +2,34 @@
 # yarn lockfile v1
 
 
+"@brazilian-utils/helper-generate-checksum@^1.0.0-alpha.3":
+  version "1.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@brazilian-utils/helper-generate-checksum/-/helper-generate-checksum-1.0.0-alpha.3.tgz#49f80d3efbb780ce6dcba7eb6b7e3a835fa5816f"
+  integrity sha512-chB8V6eMZlZJCHIwJ47Pdmw8r/b1f25OuK/yP/1F1oeeippoCIcI2QMK96Yq5FrcQEMNW+UiyCNaUz1DX+XYJg==
+  dependencies:
+    "@brazilian-utils/helper-only-numbers" "^1.0.0-alpha.1"
+
+"@brazilian-utils/helper-only-numbers@^1.0.0-alpha.1":
+  version "1.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@brazilian-utils/helper-only-numbers/-/helper-only-numbers-1.0.0-alpha.1.tgz#2c2484d011ad7e117cb46798f797f2af85d9820f"
+  integrity sha512-XzNo6iD12t5F4SiR/Z1dbic95cX3xTL2SZLk8TxZR+G/IZtNXyWfo8q1TqJVvN+PRwH30qLZcaqx/5tiWUZKmA==
+
+"@brazilian-utils/is-valid-cnpj@^1.0.0-alpha.3":
+  version "1.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@brazilian-utils/is-valid-cnpj/-/is-valid-cnpj-1.0.0-alpha.3.tgz#b72da308e07397f3dd026e7b3258986469514bda"
+  integrity sha512-MUDsdwLyi/15HgCPyYdgess50FKKoyrL5hP5iQ1saEF0iXu8gFUS9M+EGfj8toeVSnaB4FUHBgrlDBsqP89DLg==
+  dependencies:
+    "@brazilian-utils/helper-generate-checksum" "^1.0.0-alpha.3"
+    "@brazilian-utils/helper-only-numbers" "^1.0.0-alpha.1"
+
+"@brazilian-utils/is-valid-cpf@^1.0.0-alpha.3":
+  version "1.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@brazilian-utils/is-valid-cpf/-/is-valid-cpf-1.0.0-alpha.3.tgz#bc2d36081288ef9afc3a334f0169964c7ac81fb8"
+  integrity sha512-FSxC4jZzRI4xYDUY5bzajENfjEuCsrE6RKtOMxkp1WGXi+PoqWnyPfvF4+3wBJQqhX4rF/cztwA05vdO4mBmJw==
+  dependencies:
+    "@brazilian-utils/helper-generate-checksum" "^1.0.0-alpha.3"
+    "@brazilian-utils/helper-only-numbers" "^1.0.0-alpha.1"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"

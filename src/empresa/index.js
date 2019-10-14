@@ -1,6 +1,7 @@
 const empresa = require("express").Router();
-const EmpresaController = require("./EmpresaController");
+const {validStore} =require("./Validators");
+const {store} = require("./EmpresaController");
 
-empresa.post("/", EmpresaController.store);
+empresa.post("/", validStore, store);
 
 module.exports = empresa;
