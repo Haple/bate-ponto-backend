@@ -1,19 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const empresa = require('./empresa');
-
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.get('/', (requisicao, resposta) => {
-	resposta.json({status: 'DE PÉ!'});
+app.get('/', (req, res) => {
+	res.json({status: 'Tô de pé'});
 });
-app.use('/empresas', empresa);
+
+require('./empresa')(app);
+require('./sessao')(app);
 
 app.listen(process.env.PORT || 3000, () => {
-	console.log("Servidor iniciado com sucesso");
+	console.log("Servidor de pé! Vamo que vamo! ─=≡Σ((( つ＞＜)つ");
 });
