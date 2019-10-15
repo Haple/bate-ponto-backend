@@ -7,10 +7,16 @@
 const router = require("express").Router();
 const { checaCadastro } = require("./Validacoes");
 const { criarEmpresa, criarUsuario, criarAdmin } = require("./Regras");
+const { cadastroJaExistente } = require("./Regras");
 
 router.post("/", checaCadastro, async (req, res) => {
 	const { cnpj, razao_social } = req.body;
 	const { cpf, nome, email, senha, celular } = req.body;
+	try {
+		await cadastroJaExistente(cnpj, cpf, email)
+	} catch (erro) {
+		return res.status(400).json({ erro: erro.message });
+	}
 	const empresa = await criarEmpresa(cnpj, razao_social);
 	const usuario = await criarUsuario(empresa.codigo, cpf
 		, nome, email, senha, celular);

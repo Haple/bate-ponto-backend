@@ -7,20 +7,32 @@
 const db = require('../db');
 
 module.exports = {
-    async criarEmpresa(cnpj, razao_social) {
-        // TODO: verificar se o cnpj já está cadastrado
-        let empresa = await db.query(`
-            SELECT * FROM empresas WHERE
-            cnpj = $1
+    async cadastroJaExistente(cnpj, cpf, email) {
+        const cnpjExistente = await db.query(`
+            SELECT * FROM empresas
+            WHERE cnpj = $1
         `, [cnpj]);
-        empresa = await db.query(`
+        if(cnpjExistente) throw new Error("CNPJ já cadastrado");
+        const cpfExistente = await db.query(`
+            SELECT * FROM usuarios
+            WHERE cpf = $1
+        `, [cpf]);
+        if(cpfExistente) throw new Error("CPF já cadastrado");
+        const emailExistente = await db.query(`
+            SELECT * FROM usuarios
+            WHERE email = $1
+        `, [email]);
+        if(emailExistente) throw new Error("E-mail já cadastrado");
+
+    },
+    async criarEmpresa(cnpj, razao_social) {
+        const empresa = await db.query(`
             INSERT INTO empresas (cnpj,razao_social)
             VALUES ($1, $2) RETURNING *
         `, [cnpj, razao_social]);
         return empresa.rows[0];
     },
     async criarUsuario(cod_empresa, cpf, nome, email, senha, celular) {
-        // TODO: verificar se o cpf e o email já estão cadastrados
         const resultado = await db.query(`
             INSERT INTO usuarios
             (cod_empresa,cpf,nome,email
