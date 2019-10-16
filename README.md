@@ -1,3 +1,23 @@
+# Instruções
+
+## Instale em sua máquina o seguinte
+
+ - [NodeJS](https://nodejs.org/en/download/)
+ - [Yarn](https://yarnpkg.com/pt-BR/docs/install)
+
+## Configurações
+Tem um arquivo na raiz do projeto chamado ".env.exemplo".
+Preencha com as informações do banco de dados que você
+quer utilizar. A última variável pode ser um código aleatório
+(se que deixar o que está no exemplo, tudo bem).
+Após terminar, renomeie o arquivo para ".env"
+
+## Executar o projeto
+
+```
+yarn dev
+```
+
 
 # Tarefas
 
