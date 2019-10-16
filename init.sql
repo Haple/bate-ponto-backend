@@ -4,6 +4,7 @@ DROP TABLE pontos;
 DROP TABLE empregados;
 DROP TABLE jornadas;
 DROP TABLE administradores;
+DROP TABLE confirmacoes;
 DROP TABLE usuarios;
 DROP TABLE empresas;
 
@@ -22,6 +23,12 @@ CREATE TABLE usuarios(
 	senha varchar,
 	celular varchar,
 	cod_empresa int references empresas
+);
+
+CREATE TABLE confirmacoes(
+	codigo varchar primary key,
+	data_expiracao date,
+	cod_usuario int references usuarios
 );
 
 CREATE TABLE administradores(

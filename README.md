@@ -34,44 +34,48 @@
 	- [ ] (Opcional) Enviar relatório automático
 	- [ ] (Opcional) Alerta de atrasos
 
-# Pastas, controllers e métodos
+# Módulos e rotas
 ```
 
-empresa
-	EmpresaController
-	-store: cadastrar empresa
+empresa [OK]
+	Web
+		POST /empresas - cadastrar empresa
 
-sessao
-	SessaoController
-	-store: login usuários
+confirmacao [OK]
+	Web
+		GET /confirmacoes/{id_confirmacao}
+
+sessao [OK]
+	Web
+		POST /sessoes - login usuários
 
 empregado
-	EmpregadoController
-	-index: listar empregados
-	-show: exibir empregado
-	-store: cadastrar empregado
-	-update: atualizar empregado
-	-destroy: excluir empregado
+	Web
+		GET /empregados - listar empregados
+		GET /empregado/{id_empregado} - exibir empregado
+		POST /empregado - cadastrar empregado
+		PUT /empregado/{id_empregado} - atualizar empregado
+		DELETE /empregado/{id_empregado} - excluir empregado
 
 jornada
-	JornadaController
-	-index: listar jornadas da empresa
-	-store: criar jornada
-	-destroy: excluir jornada
+	Web
+		GET /jornadas - listar jornadas da empresa
+		POST /jornadas - criar jornada
+		DELETE /jornadas/{id_jornada} - excluir jornada
 
 ponto
-	PontoController
-	-index: listar pontos do empregado
-	-store: bater ponto
+	Web
+		GET /pontos  - listar pontos do empregado
+		POST /pontos - bater ponto
 
 abono
-	AbonoController
-	-index: listar abonos do empregado
-	-store: pedir abono
+	Web
+		GET /abonos?todos - listar abonos do empregado ou todos da empresa (se for admin)
+		POST /abonos - pedir abono
 
-	AdminAbonoController
-	-index: listar abonos da empresa
-	-store: criar avaliação p/ um abono
+	avaliacao
+		Web
+			POST /abonos/{id_abono}/avaliacoes - criar avaliação p/ um abono
 
 ```
 
@@ -102,3 +106,5 @@ saldo do dia = horas trabalhadas - horas diarias
 atualiza banco de horas do empregado
 		
 ```
+
+Senhas fortes: https://www.grc.com/passwords.htm

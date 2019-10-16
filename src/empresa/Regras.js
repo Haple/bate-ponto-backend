@@ -5,51 +5,74 @@
  * 
  */
 const db = require('../db');
+const bcrypt = require("bcryptjs");
+const mailer = require("nodemailer");
 
 module.exports = {
     async cadastroJaExistente(cnpj, cpf, email) {
-        const cnpjExistente = await db.query(`
+        const cnpjExistente = (await db.query(`
             SELECT * FROM empresas
             WHERE cnpj = $1
-        `, [cnpj]);
-        if(cnpjExistente.rows[0]) throw new Error("CNPJ já cadastrado");
-        const cpfExistente = await db.query(`
+        `, [cnpj])).rows[0];
+        if (cnpjExistente) throw new Error("CNPJ já cadastrado");
+        const cpfExistente = (await db.query(`
             SELECT * FROM usuarios
             WHERE cpf = $1
-        `, [cpf]);
-        if(cpfExistente.rows[0]) throw new Error("CPF já cadastrado");
-        const emailExistente = await db.query(`
+        `, [cpf])).rows[0];
+        if (cpfExistente) throw new Error("CPF já cadastrado");
+        const emailExistente = (await db.query(`
             SELECT * FROM usuarios
             WHERE email = $1
-        `, [email]);
-        if(emailExistente.rows[0]) throw new Error("E-mail já cadastrado");
-
+        `, [email])).rows[0];
+        if (emailExistente) throw new Error("E-mail já cadastrado");
     },
     async criarEmpresa(cnpj, razao_social) {
-        const empresa = await db.query(`
+        const empresa = (await db.query(`
             INSERT INTO empresas (cnpj,razao_social)
             VALUES ($1, $2) RETURNING *
-        `, [cnpj, razao_social]);
-        return empresa.rows[0];
+        `, [cnpj, razao_social])).rows[0];
+        return empresa;
     },
     async criarUsuario(cod_empresa, cpf, nome, email, senha, celular) {
-        const resultado = await db.query(`
+        senha = await bcrypt.hash(senha, 8);
+        const usuario = (await db.query(`
             INSERT INTO usuarios
             (cod_empresa,cpf,nome,email
                 ,senha,celular,confirmado)
-            VALUES ($1,$2,$3,$4,$5,$6,false) RETURNING *
+            VALUES ($1,$2,$3,$4,$5,$6,false) 
+            RETURNING 
+            codigo, cpf, nome, email, celular, confirmado
             `,
             [cod_empresa, cpf, nome, email,
-                senha, celular]);
-        return resultado.rows[0];
+                senha, celular])).rows[0];
+        return usuario;
     },
     async criarAdmin(cod_usuario) {
-        const resultado = await db.query(`
+        const admin = (await db.query(`
             INSERT INTO administradores
             (alertar_atraso, cod_usuario)
-            VALUES (false,$1) RETURNING *
+            VALUES (false,$1)
+            RETURNING alertar_atraso
             `,
-            [cod_usuario]);
-        return resultado.rows[0];
+            [cod_usuario])).rows[0];
+        return admin;
+    },
+    async enviarEmailConfirmacao(cod_confirmacao, email, nome) {
+        const transporter = mailer.createTransport({
+            service: 'gmail',
+            auth: {
+                   user: 'bateponto2019@gmail.com',
+                   pass: 'batepontoem2019'
+               }
+           });
+        await transporter.sendMail({
+            from: '"Bate ponto" <no-reply@bateponto.com>', // sender address
+            to: email,
+            subject: 'Confirmação de e-mail',
+            html: `
+                ${nome}? É você? Se sim 
+                <a href="https://surge.sh?cod=${cod_confirmacao}">clique aqui</a>.
+            `
+        });
     }
 }
