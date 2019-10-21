@@ -1,19 +1,29 @@
 /**
  * Nesse arquivo é feita a interface com a internet. 
- * Aqui são recebidas as requisições HTTP e onde são 
+S * Aqui são recebidas as requisições HTTP e onde são 
  * manipuladas as entradas e saídas das rotas.
  * 
  */
 const router = require("express").Router();
-const { checaAlgumaCoisa } = require("./Validacoes");
-const { algumaRegra } = require("./Regras");
+const { ehPedidoValido } = require("./Validacoes");
+const { ehEmpregado, criarAbono } = require("./Regras");
 
 // rotas dos abonos
-router.post("/", checaAlgumaCoisa, async (req, res) => {
-	algumaRegra();
-	return res.status(200).json({ msg: "ALGUMA COISA" });
+router.post("/", ehPedidoValido, async (req, res) => {
+	const { cod_usuario, dataSolicitacao, dataAbono, motivo } = req.body;
+
+	try {
+
+		//const empregado = await ehEmpregado(cod_usuario);
+		//if(empregado) criarAbono(cod_usuario, dataSolicitacao, dataAbono, motivo);
+
+		return res.status(200).json({ msg: req.body });
+
+	} catch (erro) {
+		return res.status(401).json({ erro: erro.message });
+	}
 });
 
-require('./avaliacao')(router);
+//require('./avaliacao')(router);
 
 module.exports = app => app.use('/abonos', router);
