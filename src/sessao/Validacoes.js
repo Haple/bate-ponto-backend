@@ -13,11 +13,11 @@ module.exports = {
         let erros = [];
 
         const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        if (!email) erros.push({ erro: "E-mail obrigatório" });
+        if (!email || email.trim() == "") erros.push({ erro: "E-mail obrigatório" });
         if (!emailRegex.test(email)) erros.push({ erro: "E-mail inválido" });
 
         const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-        if (!senha) erros.push({ erro: "Senha obrigatória" });
+        if (!senha || senha.trim() == "") erros.push({ erro: "Senha obrigatória" });
         if (!senhaRegex.test(senha)) erros.push({ erro: "Senha inválida" });
 
         if (erros.length > 0) {
@@ -31,7 +31,7 @@ module.exports = {
         if (!token) return res.status(401).send({
             mensagem: "Credencial ausente"
         });
-        jwt.verify(token, process.env.SECRET, function (erro, resultado) {
+        jwt.verify(token, process.env.SECRET, (erro, resultado) => {
             if (erro) return res.status(401).send({
                 mensagem: 'Credencial inválida'
             });

@@ -77,7 +77,7 @@ empregado
 		PUT /empregado/{id_empregado} - atualizar empregado
 		DELETE /empregado/{id_empregado} - excluir empregado
 
-jornada
+jornada [OK]
 	Web
 		GET /jornadas - listar jornadas da empresa
 		POST /jornadas - criar jornada

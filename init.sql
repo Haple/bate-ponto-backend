@@ -44,7 +44,7 @@ CREATE TABLE jornadas(
 	saida1 time,
 	entrada2 time,
 	saida2 time,
-	qtd_horas_diarias time
+	carga_diaria int
 );
 
 
