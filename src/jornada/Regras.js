@@ -41,7 +41,7 @@ module.exports = {
             WHERE cod_empresa = $1
             AND codigo = $2
         `, [cod_empresa, cod_jornada])).rowCount >= 1;
-        return deletado;
+        if (!deletado) throw new Error("Jornada não encontrada");
     }
 }
 

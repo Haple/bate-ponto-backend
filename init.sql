@@ -49,6 +49,7 @@ CREATE TABLE jornadas(
 
 
 CREATE TABLE empregados(
+	banco_horas int,
 	enviar_lembrete boolean,
 	cod_jornada int references jornadas,
 	cod_usuario int primary key references usuarios

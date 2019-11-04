@@ -32,7 +32,7 @@ module.exports = {
         if (!senha || senha.trim() == "") erros.push({ erro: "Senha obrigatória" });
         if (!senhaRegex.test(senha)) erros.push({ erro: "Senha inválida" });
 
-        const celularRegex = /(\({0,1}\d{0,2}\){0,1} {0,1})(\d{4,5}) {0,1}-{0,1}(\d{4})/;
+        const celularRegex = /^(\({0,1}\d{0,2}\){0,1} {0,1})(\d{4,5}) {0,1}-{0,1}(\d{4})$/;
         if (!celular || celular.trim() == "") erros.push({ erro: "Celular obrigatório" });
         if (!celularRegex.test(celular)) erros.push({ erro: "Celular inválido" });
 

@@ -16,6 +16,7 @@ require('./sessao')(app);
 require('./abono')(app);
 require("./confirmacao")(app);
 require("./jornada")(app);
+require("./empregado")(app);
 
 app.listen(process.env.PORT || 3000, () => {
 	console.log("Servidor de pé! Vamo que vamo! ─=≡Σ((( つ＞＜)つ");

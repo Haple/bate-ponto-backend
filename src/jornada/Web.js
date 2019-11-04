@@ -14,9 +14,12 @@ const { buscarJornadas, deletarJornada } = require("./Regras");
 router.delete("/:cod_jornada", checaJWT, checaExclusao, async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const { cod_jornada } = req.params;
-	const deletado = await deletarJornada(cod_empresa, cod_jornada);
-	if (deletado) return res.status(200).json();
-	else return res.status(404).json();
+	try {
+		await deletarJornada(cod_empresa, cod_jornada);
+		return res.status(200).json();
+	} catch (erro) {
+		return res.status(404).json({ erro: erro.message })
+	}
 });
 
 router.get("/", checaJWT, async (req, res) => {

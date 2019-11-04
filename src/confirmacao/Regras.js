@@ -7,9 +7,9 @@
 const db = require('../db');
 const uuid = require("uuid/v4");
 const { addDays } = require("date-fns");
+const mailer = require("nodemailer");
 
 module.exports = {
-    async algumaRegra() { },
     async criarConfirmacao(cod_usuario) {
         const codigo = uuid();
         await db.query(`
@@ -35,5 +35,23 @@ module.exports = {
             `,
             [confirmacao.cod_usuario])).rows[0];
         return usuario.email;
+    },
+    async enviarEmailConfirmacao(cod_confirmacao, email, nome) {
+        const transporter = mailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.EMAIL_SENHA
+            }
+        });
+        await transporter.sendMail({
+            from: '"Bate ponto" <no-reply@bateponto.com>',
+            to: email,
+            subject: 'Confirmação de e-mail',
+            html: `
+                ${nome}? É você? Se sim 
+                <a href="https://surge.sh?cod=${cod_confirmacao}">clique aqui</a>.
+            `
+        });
     }
 }
