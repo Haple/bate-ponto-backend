@@ -7,6 +7,7 @@
 const db = require('../db');
 const uuid = require("uuid/v4");
 const { addDays } = require("date-fns");
+
 const mailer = require("nodemailer");
 
 module.exports = {
@@ -44,6 +45,7 @@ module.exports = {
                 pass: process.env.EMAIL_SENHA
             }
         });
+
         await transporter.sendMail({
             from: '"Bate ponto" <no-reply@bateponto.com>',
             to: email,
