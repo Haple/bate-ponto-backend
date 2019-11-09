@@ -29,21 +29,14 @@ module.exports = {
             [cod_usuario, cod_jornada])).rows[0];
         return empregado;
     },
-    async atualizaEmpregado(cod_empregado, cod_empresa, nome, email, celular, cod_jornada) {
-        const jornada = (await db.query(`
-            SELECT * FROM   jornadas
-            WHERE codigo = $1
-            AND cod_empresa = $2
-        `, [cod_jornada, cod_empresa])).rows[0];
-        if (!jornada) throw new Error("Código da jornada não encontrado");
+    async atualizaEmpregado(cod_empregado, nome, email, celular, cod_jornada) {
         const empregado = (await db.query(`
             UPDATE empregados
             SET cod_jornada = $1
             WHERE cod_usuario = $2
-            AND cod_empresa = $3
             RETURNING *
             `,
-            [cod_jornada, cod_empregado, cod_empresa])).rows[0];
+            [cod_jornada, cod_empregado])).rows[0];
         if (!empregado) throw new Error("Empregado não encontrado");
         const usuario = (await db.query(`
             UPDATE usuarios
@@ -55,7 +48,7 @@ module.exports = {
             `,
             [nome, email, celular, cod_empregado])).rows[0];
         delete usuario.senha;
-        return { usuario, empregado, jornada };
+        return { usuario, empregado };
     },
 
     async buscaEmpregado(cod_empresa, cod_empregado) {
@@ -67,7 +60,7 @@ module.exports = {
             AND u.codigo = $2
             `,
             [cod_empresa, cod_empregado])).rows[0];
-        if(!empregado) throw new Error("Empregado não encontrado");
+        if (!empregado) throw new Error("Empregado não encontrado");
         delete empregado.senha;
         return empregado;
     },
@@ -96,8 +89,20 @@ module.exports = {
             await deletarConfirmacoes(cod_empresa, cod_empregado);
             await deletarUsuario(cod_empresa, cod_empregado);
         }
+    },
+    async jornadaExiste(cod_jornada, cod_empresa) {
+        const jornada = (await db.query(`
+                SELECT * FROM jornadas
+                WHERE codigo = $1
+                AND cod_empresa = $2
+            `, [cod_jornada, cod_empresa])).rows[0];
+        if (!jornada)
+            throw new Error("Código da jornada não encontrado");
+        return jornada;
     }
 }
+
+
 
 async function deletarUsuario(cod_empresa, cod_empregado) {
     await db.query(`
