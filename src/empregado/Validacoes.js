@@ -17,7 +17,7 @@ module.exports = {
 
         if (!cpf || cpf.trim() == "") erros.push({ erro: "CPF obrigatório" });
         if (!isValidCpf(cpf)) erros.push({ erro: "CPF inválido" });
-        req.body.cpf = cpf.replace(/(?!\w|\s)./g, '')
+        req.body.cpf = cpf.replace(/(?!\w|\s)./g, '');
 
         if (!nome || nome.trim() == "") erros.push({ erro: "Nome obrigatório" });
 
