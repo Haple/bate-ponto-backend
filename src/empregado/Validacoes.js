@@ -17,6 +17,7 @@ module.exports = {
 
         if (!cpf || cpf.trim() == "") erros.push({ erro: "CPF obrigatório" });
         if (!isValidCpf(cpf)) erros.push({ erro: "CPF inválido" });
+        req.body.cpf = cpf.replace(/(?!\w|\s)./g, '')
 
         if (!nome || nome.trim() == "") erros.push({ erro: "Nome obrigatório" });
 
@@ -31,6 +32,7 @@ module.exports = {
         const celularRegex = /^(\({0,1}\d{0,2}\){0,1} {0,1})(\d{4,5}) {0,1}-{0,1}(\d{4})$/;
         if (!celular || celular.trim() == "") erros.push({ erro: "Celular obrigatório" });
         if (!celularRegex.test(celular)) erros.push({ erro: "Celular inválido" });
+        req.body.celular = celular.replace(/(?!\w|\s)./g, '').replace(/\s/g, '');
 
         const numeroRegex = /^[0-9]*$/;
         if (!cod_jornada) erros.push({ erro: "Código da jornada obrigatório" });
@@ -49,7 +51,6 @@ module.exports = {
         let erros = [];
 
         const numeroRegex = /^[0-9]*$/;
-        // const numeroRegex = new RegExp("^[0-9]*$");
         if (!cod_empregado) erros.push({ erro: "Código do empregado obrigatório" });
         if (!numeroRegex.test(cod_empregado)) erros.push({ erro: "Código do empregado inválido" });
 
@@ -63,6 +64,7 @@ module.exports = {
         const celularRegex = /^(\({0,1}\d{0,2}\){0,1} {0,1})(\d{4,5}) {0,1}-{0,1}(\d{4})$/;
         if (!celular || celular.trim() == "") erros.push({ erro: "Celular obrigatório" });
         if (!celularRegex.test(celular)) erros.push({ erro: "Celular inválido" });
+        req.body.celular = celular.replace(/(?!\w|\s)./g, '').replace(/\s/g, '');
 
         if (!cod_jornada) erros.push({ erro: "Código da jornada obrigatório" });
         if (!numeroRegex.test(cod_jornada)) erros.push({ erro: "Código da jornada inválido" });

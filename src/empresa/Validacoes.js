@@ -16,11 +16,13 @@ module.exports = {
 
         if (!cnpj || cnpj.trim() == "") erros.push({ erro: "CNPJ obrigatório" });
         if (!isValidCnpj(cnpj)) erros.push({ erro: "CNPJ inválido" });
+        req.body.cnpj = cnpj.replace(/(?!\w|\s)./g, '');
 
         if (!razao_social || razao_social.trim() == "") erros.push({ erro: "Razão Social obrigatória" });
 
         if (!cpf || cpf.trim() == "") erros.push({ erro: "CPF obrigatório" });
         if (!isValidCpf(cpf)) erros.push({ erro: "CPF inválido" });
+        req.body.cpf = cpf.replace(/(?!\w|\s)./g, '');
 
         if (!nome || nome.trim() == "") erros.push({ erro: "Nome obrigatório" });
 
@@ -35,6 +37,7 @@ module.exports = {
         const celularRegex = /^(\({0,1}\d{0,2}\){0,1} {0,1})(\d{4,5}) {0,1}-{0,1}(\d{4})$/;
         if (!celular || celular.trim() == "") erros.push({ erro: "Celular obrigatório" });
         if (!celularRegex.test(celular)) erros.push({ erro: "Celular inválido" });
+        req.body.celular = celular.replace(/(?!\w|\s)./g, '').replace(/\s/g, '');
 
         if (erros.length > 0) {
             res.status(400).json({ erros: erros });
