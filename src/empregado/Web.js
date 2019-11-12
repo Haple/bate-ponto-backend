@@ -37,8 +37,8 @@ router.delete("/:cod_empregado", checaJWT, checaExclusao, async (req, res) => {
 
 router.get("/", checaJWT, async (req, res) => {
 	const { cod_empresa } = req.usuario;
-	const { nome } = req.query;
-	const empregados = await buscaEmpregados(cod_empresa, nome);
+	const { nome, cod_jornada } = req.query;
+	const empregados = await buscaEmpregados(cod_empresa, cod_jornada, nome);
 	return res.json(empregados);
 });
 
