@@ -13,11 +13,7 @@ module.exports = {
             WHERE cpf = $1
         `, [cpf])).rows[0];
         if (cpfExistente) throw new Error("CPF já cadastrado");
-        const emailExistente = (await db.query(`
-            SELECT * FROM usuarios
-            WHERE email = $1
-        `, [email])).rows[0];
-        if (emailExistente) throw new Error("E-mail já cadastrado");
+        await emailJaExiste(email);
     },
     async criarEmpregado(cod_usuario, cod_jornada) {
         const empregado = (await db.query(`
@@ -31,13 +27,18 @@ module.exports = {
     },
     async atualizaEmpregado(cod_empregado, nome, email, celular, cod_jornada) {
         const empregado = (await db.query(`
-            UPDATE empregados
+            UPDATE empregados e
             SET cod_jornada = $1
-            WHERE cod_usuario = $2
+            FROM usuarios u
+            WHERE e.cod_usuario = u.codigo  
+            AND cod_usuario = $2
             RETURNING *
             `,
             [cod_jornada, cod_empregado])).rows[0];
         if (!empregado) throw new Error("Empregado não encontrado");
+        if (empregado.email != email) {
+            await emailJaExiste(email);
+        }
         const usuario = (await db.query(`
             UPDATE usuarios
             SET nome = $1,
@@ -48,7 +49,7 @@ module.exports = {
             `,
             [nome, email, celular, cod_empregado])).rows[0];
         delete usuario.senha;
-        return { usuario, empregado };
+        return { ...usuario, cod_jornada };
     },
 
     async buscaEmpregado(cod_empresa, cod_empregado) {
@@ -92,17 +93,26 @@ module.exports = {
     },
     async jornadaExiste(cod_jornada, cod_empresa) {
         const jornada = (await db.query(`
-                SELECT * FROM jornadas
-                WHERE codigo = $1
-                AND cod_empresa = $2
-            `, [cod_jornada, cod_empresa])).rows[0];
+        SELECT * FROM jornadas
+        WHERE codigo = $1
+        AND cod_empresa = $2
+        `, [cod_jornada, cod_empresa])).rows[0];
         if (!jornada)
             throw new Error("Código da jornada não encontrado");
         return jornada;
-    }
+    },
+
 }
 
 
+async function emailJaExiste(email) {
+    const emailExistente = (await db.query(`
+            SELECT * FROM usuarios
+            WHERE email = $1
+        `, [email])).rows[0];
+    if (emailExistente)
+        throw new Error("E-mail já cadastrado");
+}
 
 async function deletarUsuario(cod_empresa, cod_empregado) {
     await db.query(`
