@@ -66,15 +66,24 @@ module.exports = {
         return empregado;
     },
 
-    async buscaEmpregados(cod_empresa, nome) {
+    async buscaEmpregados(cod_empresa, cod_jornada, nome) {
+        console.log(nome);
+        console.log(cod_jornada);
+
         const empregados = (await db.query(`
             SELECT * FROM empregados e
             INNER JOIN usuarios u
             ON u.codigo = e.cod_usuario
             WHERE u.cod_empresa = $1
-            AND $2 = '' or u.nome like $2
+            AND ($2 = 0 or e.cod_jornada = $2)
+            AND ($3 = '' or u.nome like $3)
             `,
-            [cod_empresa, nome ? `%${nome}%` : ''])).rows;
+            [
+                cod_empresa,
+                cod_jornada ? cod_jornada : 0,
+                nome ? `%${nome}%` : ''
+            ],
+        )).rows;
         return empregados.map(empregado => {
             delete empregado.senha;
             return empregado;
