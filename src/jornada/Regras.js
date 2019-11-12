@@ -36,6 +36,14 @@ module.exports = {
         return jornadas;
     },
     async deletarJornada(cod_empresa, cod_jornada) {
+        const jornadaUsada = (await db.query(`
+            SELECT * FROM empregados e
+            INNER JOIN usuarios u
+            ON e.cod_usuario = u.codigo
+            WHERE u.cod_empresa = $1
+            AND e.cod_jornada =$2
+        `, [cod_empresa, cod_jornada])).rows[0];
+        if (jornadaUsada) throw new Error("A jornada ainda está sendo utilizada.");
         const deletado = (await db.query(`
             DELETE FROM jornadas
             WHERE cod_empresa = $1

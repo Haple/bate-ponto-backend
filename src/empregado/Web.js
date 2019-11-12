@@ -8,6 +8,7 @@ const router = require("express").Router();
 const { checaCadastro, checaAtualizacao, checaExclusao } = require("./Validacoes");
 const { criarEmpregado, cadastroJaExistente, buscaEmpregado } = require("./Regras");
 const { atualizaEmpregado, buscaEmpregados, deletarEmpregado } = require("./Regras");
+const { jornadaExiste } = require("./Regras");
 const { criarConfirmacao, enviarEmailConfirmacao } = require("../confirmacao/Regras");
 const { criarUsuario } = require("../empresa/Regras");
 const { checaJWT } = require("../sessao/Validacoes");
@@ -46,9 +47,9 @@ router.put("/:cod_empregado", checaJWT, checaAtualizacao, async (req, res) => {
 	const { cod_empregado } = req.params;
 	const { nome, email, celular, cod_jornada } = req.body;
 	try {
+		await jornadaExiste(cod_jornada, cod_empresa);
 		const empregado = await atualizaEmpregado(
 			cod_empregado,
-			cod_empresa,
 			nome,
 			email,
 			celular,
@@ -63,16 +64,17 @@ router.post("/", checaJWT, checaCadastro, async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const { cpf, nome, email, senha, celular, cod_jornada } = req.body;
 	try {
-		await cadastroJaExistente(cpf, email)
+		await cadastroJaExistente(cpf, email);
+		await jornadaExiste(cod_jornada, cod_empresa);
+		const usuario = await criarUsuario(cod_empresa, cpf
+			, nome, email, senha, celular);
+		const empregado = await criarEmpregado(usuario.codigo, cod_jornada);
+		const cod_confirmacao = await criarConfirmacao(usuario.codigo);
+		enviarEmailConfirmacao(cod_confirmacao, email, nome);
+		return res.status(201).json({ ...usuario, ...empregado });
 	} catch (erro) {
 		return res.status(400).json({ erro: erro.message });
 	}
-	const usuario = await criarUsuario(cod_empresa, cpf
-		, nome, email, senha, celular);
-	const empregado = await criarEmpregado(usuario.codigo, cod_jornada);
-	const cod_confirmacao = await criarConfirmacao(usuario.codigo);
-	enviarEmailConfirmacao(cod_confirmacao, email, nome);
-	return res.status(201).json({ ...usuario, ...empregado });
 });
 
 module.exports = app => app.use('/empregados', router);
