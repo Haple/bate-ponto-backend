@@ -38,5 +38,14 @@ module.exports = {
             req.usuario = resultado;
             next();
         });
+    },
+    ehAdmin(req, res, next) {
+        const { admin } = req.usuario;
+        if (admin)
+            next();
+        else
+            return res.status(403).json({
+                erro: "Acesso restrito a administradores"
+            });
     }
 }; 
