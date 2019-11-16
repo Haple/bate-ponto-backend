@@ -5,6 +5,7 @@
  * 
  */
 const router = require("express").Router();
+const mailer = require("nodemailer");
 const cron = require('node-cron');
 const { toDate } = require("date-fns");
 const { checaJWT, ehEmpregado } = require("../sessao/Validacoes");
@@ -41,6 +42,27 @@ cron.schedule('0 0 2 * * TUE-SAT', async () => {
 		if (saldoDeOntem == -carga_diaria) {
 			console.log(`O empregado ${cod_usuario} não trabalhou ontem`);
 		}
+	});
+}, {
+	scheduled: true,
+	timezone: "America/Sao_Paulo"
+});
+
+cron.schedule('0 0 * ? * *', async () => {
+	console.log("TESTE HEROKU...");
+	const transporter = mailer.createTransport({
+		service: 'gmail',
+		auth: {
+			user: process.env.EMAIL,
+			pass: process.env.EMAIL_SENHA
+		}
+	});
+
+	await transporter.sendMail({
+		from: '"Teste heroku" <no-reply@bateponto.com>',
+		to: "santosalepholiveira@gmail.com",
+		subject: 'TESTE HEROKU',
+		html: `Horário; ${new Date()}`
 	});
 }, {
 	scheduled: true,
