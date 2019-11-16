@@ -48,7 +48,7 @@ cron.schedule('0 0 2 * * TUE-SAT', async () => {
 	timezone: "America/Sao_Paulo"
 });
 
-cron.schedule('0 0 * ? * *', async () => {
+cron.schedule('0 * * * *', async () => {
 	console.log("TESTE HEROKU...");
 	const transporter = mailer.createTransport({
 		service: 'gmail',
