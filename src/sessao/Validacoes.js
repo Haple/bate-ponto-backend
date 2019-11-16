@@ -47,5 +47,14 @@ module.exports = {
             return res.status(403).json({
                 erro: "Acesso restrito a administradores"
             });
+    },
+    ehEmpregado(req, res, next) {
+        const { empregado } = req.usuario;
+        if (empregado)
+            next();
+        else
+            return res.status(403).json({
+                erro: "Acesso restrito a empregados"
+            });
     }
 }; 
