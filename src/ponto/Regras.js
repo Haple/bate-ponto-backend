@@ -5,9 +5,9 @@
  * 
  */
 const startOfToday = require('date-fns/startOfToday');
+const startOfYesterday = require('date-fns/startOfYesterday');
 const { differenceInMinutes } = require("date-fns");
 const db = require("../db");
-
 
 module.exports = {
   async atualizaBancoDeHoras(saldoAtual, cod_empregado) {
@@ -17,28 +17,26 @@ module.exports = {
         WHERE cod_usuario = $2`, [saldoAtual, cod_empregado]);
   },
 
-  calculaNovoSaldo(pontosDeHoje, cargaDiaria, bancoDeHoras) {
+  calculaSaldo(pontos, cargaDiaria) {
     let entradas = [];
     let saidas = [];
     let i, j = 0, k = 0;
-    for (i = 0; i < pontosDeHoje.length; i++) {
-      const horario = pontosDeHoje[i];
+    for (i = 0; i < pontos.length; i++) {
+      const horario = pontos[i];
       if (i % 2 == 0)
         entradas[j++] = horario;
       else
         saidas[k++] = horario;
     }
-    if (saidas.length == entradas.length) {
+    if (saidas.length > 0) {
       let horasTrabalhadas = 0;
-      for (i = 0; i < saidas.length - 1; i++) {
+      for (i = 0; i < saidas.length; i++) {
         horasTrabalhadas += differenceInMinutes(saidas[i], entradas[i]);
       }
-      let saldoDiarioAnterior = horasTrabalhadas == 0 ? 0 : horasTrabalhadas - cargaDiaria;
-      horasTrabalhadas += differenceInMinutes(saidas[i], entradas[i]);
-      let saldoDiarioNovo = horasTrabalhadas - cargaDiaria;
-      return (bancoDeHoras - saldoDiarioAnterior) + saldoDiarioNovo;
+      return horasTrabalhadas - cargaDiaria;
+    } else {
+      return -cargaDiaria;
     }
-    return bancoDeHoras;
   },
 
   async buscarJornada(cod_jornada) {
@@ -47,18 +45,19 @@ module.exports = {
       WHERE codigo = $1`, [cod_jornada])).rows[0];
   },
 
-  async buscarEmpregado(cod_empregado) {
+  async buscarEmpregados() {
     return (await db.query(`
       SELECT * from empregados
-      WHERE cod_usuario = $1`, [cod_empregado])).rows[0];
+      `)).rows;
   },
 
-  async buscarPontosDeHoje(cod_empregado) {
+  async buscarPontosDeOntem(cod_empregado) {
     return (await db.query(`
       SELECT * FROM pontos
       WHERE cod_empregado = $1
       AND criado_em >= $2
-      `, [cod_empregado, startOfToday()])).rows;
+      AND criado_em < $3
+      `, [cod_empregado, startOfYesterday(), startOfToday()])).rows;
   },
 
   async salvarPonto(latitude, longitude, localizacao, cod_empregado) {
