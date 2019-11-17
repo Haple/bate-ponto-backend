@@ -48,13 +48,6 @@ cron.schedule('0 0 2 * * TUE-SAT', async () => {
 	timezone: "America/Sao_Paulo"
 });
 
-cron.schedule('* * * * *', async () => {
-	console.log("TESTE HEROKU: ", new Date());
-}, {
-	scheduled: true,
-	timezone: "America/Sao_Paulo"
-});
-
 module.exports = app => app.use('/pontos', router);
 
 
