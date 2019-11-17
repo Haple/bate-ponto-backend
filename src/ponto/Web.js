@@ -48,22 +48,8 @@ cron.schedule('0 0 2 * * TUE-SAT', async () => {
 	timezone: "America/Sao_Paulo"
 });
 
-cron.schedule('0 * * * *', async () => {
-	console.log("TESTE HEROKU...");
-	const transporter = mailer.createTransport({
-		service: 'gmail',
-		auth: {
-			user: process.env.EMAIL,
-			pass: process.env.EMAIL_SENHA
-		}
-	});
-
-	await transporter.sendMail({
-		from: '"Teste heroku" <no-reply@bateponto.com>',
-		to: "santosalepholiveira@gmail.com",
-		subject: 'TESTE HEROKU',
-		html: `Horário; ${new Date()}`
-	});
+cron.schedule('* * * * *', async () => {
+	console.log("TESTE HEROKU: ", new Date());
 }, {
 	scheduled: true,
 	timezone: "America/Sao_Paulo"
