@@ -5,7 +5,6 @@
  * 
  */
 const router = require("express").Router();
-const mailer = require("nodemailer");
 const cron = require('node-cron');
 const { toDate } = require("date-fns");
 const { checaJWT, ehEmpregado } = require("../sessao/Validacoes");
