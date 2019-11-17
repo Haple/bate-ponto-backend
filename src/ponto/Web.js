@@ -9,8 +9,9 @@ const cron = require('node-cron');
 const { toDate } = require("date-fns");
 const { checaJWT, ehEmpregado } = require("../sessao/Validacoes");
 const { checaPonto } = require("./Validacoes");
-const { salvarPonto, buscarEmpregados, buscarJornada } = require("./Regras");
-const { buscarPontosDeOntem, calculaSaldo, atualizaBancoDeHoras } = require("./Regras");
+const { salvarPonto, buscarEmpregados, buscarJornada, } = require("./Regras");
+const { buscarPontosDeOntem, atualizaBancoDeHoras } = require("./Regras");
+const { calculaSaldo, buscarPontos } = require("./Regras");
 
 router.use(checaJWT);
 router.use(ehEmpregado);
@@ -24,7 +25,7 @@ router.post("/", checaPonto, async (req, res) => {
 
 router.get("/", async (req, res) => {
 	const { codigo } = req.usuario;
-	const pontos = await buscarPontosDeHoje(codigo);
+	const pontos = await buscarPontos(codigo);
 	return res.json(pontos);
 });
 

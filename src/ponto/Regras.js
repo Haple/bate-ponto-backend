@@ -6,7 +6,7 @@
  */
 const startOfToday = require('date-fns/startOfToday');
 const startOfYesterday = require('date-fns/startOfYesterday');
-const { differenceInMinutes } = require("date-fns");
+const { differenceInMinutes, subMonths } = require("date-fns");
 const db = require("../db");
 
 module.exports = {
@@ -49,6 +49,15 @@ module.exports = {
     return (await db.query(`
       SELECT * from empregados
       `)).rows;
+  },
+
+  async buscarPontos(cod_empregado) {
+    return (await db.query(`
+      SELECT * FROM pontos
+      WHERE cod_empregado = $1
+      AND criado_em >= $2
+      ORDER BY codigo DESC
+      `, [cod_empregado, subMonths(new Date(), 1)])).rows;
   },
 
   async buscarPontosDeOntem(cod_empregado) {
