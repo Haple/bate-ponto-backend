@@ -93,7 +93,7 @@ jornada [OK]
 		POST /jornadas - criar jornada
 		DELETE /jornadas/{id_jornada} - excluir jornada
 
-ponto
+ponto [OK]
 	Web
 		GET /pontos  - listar pontos do empregado
 		POST /pontos - bater ponto
