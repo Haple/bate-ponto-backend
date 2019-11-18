@@ -5,40 +5,39 @@
  * erro na checagem dos dados de entrada.
  * 
  */
-
 module.exports = {
     ehPedidoValido(req, res, next) {
-        const { motivo, data_solicitacao, data_abonada } = req.body;
+        const { cod_usuario, data_solicitacao, data_abono, motivo } = req.body;
         let erros = [];
 
-        if(!data_solicitacao) erros.push({ erro: "Data da Solicitação obrigatória" });
-        if(!data_abonada) erros.push({ erro: "Data do Abono obrigatório" });
+        if (!cod_usuario) erros.push({ erro: "Código do usuário obrigatório" });
+        else if(!Number.isInteger(parseInt(cod_usuario))) erros.push({ erro: "Código invalido" });
+
+        if (!data_solicitacao) erros.push({ erro: "Data da Solicitação obrigatória" });
+        else if(!validaData(data_solicitacao)) erros.push({ erro: "Data a Solicitação invalida" });
+            
+        if (!data_abono) erros.push({ erro: "Data do Abono obrigatório" });
+        else if(!validaData(data_abono)) erros.push({ erro: "Data do Abono invalida" });
+
+        if (!validaPeriodo(data_abono)) erros.push({ erro: "Solicitação de Abono incorreta" });
+
         if(!motivo) erros.push({ erro: "Motivo obrigatório" });
-             
-        if(!validaData(data_solicitacao)) erros.push({ erro: "Data a Solicitação invalida" });
-        if(!validaData(data_abonada)) erros.push({ erro: "Data do Abono invalida" });
-        if(!validaPeriodo(data_abonada)) erros.push({ erro: "Data de abono não pode ser maior que data atual" });
 
-        if (erros.length > 0) res.status(400).json({ erros: erros });
+
+        if (erros.length > 0) res.status(400).json({ erros: erros }); 
         else next();
-    },
-
-    ehFiltroValido(req, res, next) {
-        const { data_solicitacao, data_abonada, cod_funcionario } = req.body;
-        let erros = [];
-
-        if(data_solicitacao)
-            if(!validaData(data_solicitacao)) erros.push({ erro: "Data a Solicitação invalida" });
-        if(data_abonada)
-            if(!validaData(data_abonada)) erros.push({ erro: "Data a Solicitação invalida" });
-
-        if (erros.length > 0) res.status(400).json({ erros: erros });
-        else next();
-    },
+    }
 };
 
+function validaData(data) {
+    const dataRegex = /(\d{4})[-.\/](\d{2})[-.\/](\d{2})/;
+    if(!dataRegex.test(data))
+        return false;
+    return true;
+}
+
 function validaPeriodo(data) {
-    
+
     var parametro = data.split('/');
     var date = new Date();
 
@@ -51,12 +50,4 @@ function validaPeriodo(data) {
     if(parametro.getTime() > date.getTime()) return false;
 
     return true;
-};
-
-function validaData(data) {
-
-    const dataRegex = /(\d{4})[-.\/](\d{2})[-.\/](\d{2})/;
-    if(!dataRegex.test(data))
-        return false;
-    return true;
-};
+}
