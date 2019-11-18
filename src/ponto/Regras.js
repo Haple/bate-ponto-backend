@@ -7,6 +7,7 @@
 const startOfToday = require('date-fns/startOfToday');
 const startOfYesterday = require('date-fns/startOfYesterday');
 const { differenceInMinutes, subMonths } = require("date-fns");
+const { toDate } = require("date-fns-tz")
 const db = require("../db");
 
 module.exports = {
@@ -57,7 +58,8 @@ module.exports = {
       WHERE cod_empregado = $1
       AND criado_em >= $2
       ORDER BY codigo DESC
-      `, [cod_empregado, subMonths(new Date(), 1)])).rows;
+      `, [cod_empregado,
+      subMonths(toDate(new Date(), { timeZone: process.env.TZ }), 1)])).rows;
   },
 
   async buscarPontosDeOntem(cod_empregado) {
@@ -74,6 +76,7 @@ module.exports = {
       INSERT INTO pontos
       (criado_em, latitude, longitude, localizacao, cod_empregado)
       values ($1, $2, $3, $4, $5) returning * 
-      `, [new Date(), latitude, longitude, localizacao, cod_empregado])).rows[0];
+      `, [toDate(new Date(), { timeZone: process.env.TZ }), latitude,
+      longitude, localizacao, cod_empregado])).rows[0];
   }
 }
