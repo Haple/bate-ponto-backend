@@ -11,9 +11,12 @@ const { atualizaEmpregado, buscaEmpregados, deletarEmpregado } = require("./Regr
 const { jornadaExiste } = require("./Regras");
 const { criarConfirmacao, enviarEmailConfirmacao } = require("../confirmacao/Regras");
 const { criarUsuario } = require("../empresa/Regras");
-const { checaJWT } = require("../sessao/Validacoes");
+const { checaJWT, ehAdmin } = require("../sessao/Validacoes");
 
-router.get("/:cod_empregado", checaJWT, async (req, res) => {
+router.use(checaJWT);
+router.use(ehAdmin);
+
+router.get("/:cod_empregado", async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const { cod_empregado } = req.params;
 	try {
@@ -24,7 +27,7 @@ router.get("/:cod_empregado", checaJWT, async (req, res) => {
 	}
 });
 
-router.delete("/:cod_empregado", checaJWT, checaExclusao, async (req, res) => {
+router.delete("/:cod_empregado", checaExclusao, async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const { cod_empregado } = req.params;
 	try {
@@ -35,14 +38,14 @@ router.delete("/:cod_empregado", checaJWT, checaExclusao, async (req, res) => {
 	}
 });
 
-router.get("/", checaJWT, async (req, res) => {
+router.get("/", async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const { nome, cod_jornada } = req.query;
 	const empregados = await buscaEmpregados(cod_empresa, cod_jornada, nome);
 	return res.json(empregados);
 });
 
-router.put("/:cod_empregado", checaJWT, checaAtualizacao, async (req, res) => {
+router.put("/:cod_empregado", checaAtualizacao, async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const { cod_empregado } = req.params;
 	const { nome, email, celular, cod_jornada } = req.body;
@@ -60,7 +63,7 @@ router.put("/:cod_empregado", checaJWT, checaAtualizacao, async (req, res) => {
 	}
 });
 
-router.post("/", checaJWT, checaCadastro, async (req, res) => {
+router.post("/", checaCadastro, async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const { cpf, nome, email, senha, celular, cod_jornada } = req.body;
 	try {

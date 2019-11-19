@@ -5,13 +5,15 @@
  * 
  */
 const router = require("express").Router();
-const { checaJWT } = require("../sessao/Validacoes");
+const { checaJWT, ehAdmin } = require("../sessao/Validacoes");
 const { checaCadastro, checaExclusao } = require("./Validacoes");
 const { jornadaJaExistente, criarJornada } = require("./Regras");
 const { buscarJornadas, deletarJornada } = require("./Regras");
 
+router.use(checaJWT);
+router.use(ehAdmin);
 
-router.delete("/:cod_jornada", checaJWT, checaExclusao, async (req, res) => {
+router.delete("/:cod_jornada", checaExclusao, async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const { cod_jornada } = req.params;
 	try {
@@ -22,13 +24,13 @@ router.delete("/:cod_jornada", checaJWT, checaExclusao, async (req, res) => {
 	}
 });
 
-router.get("/", checaJWT, async (req, res) => {
+router.get("/", async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const jornadas = await buscarJornadas(cod_empresa);
 	return res.json(jornadas);
 });
 
-router.post("/", checaJWT, checaCadastro, async (req, res) => {
+router.post("/", checaCadastro, async (req, res) => {
 	const { nome, entrada1, saida1 } = req.body;
 	const { entrada2, saida2 } = req.body;
 	const { cod_empresa } = req.usuario;

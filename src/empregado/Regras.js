@@ -67,9 +67,6 @@ module.exports = {
     },
 
     async buscaEmpregados(cod_empresa, cod_jornada, nome) {
-        console.log(nome);
-        console.log(cod_jornada);
-
         const empregados = (await db.query(`
             SELECT * FROM empregados e
             INNER JOIN usuarios u

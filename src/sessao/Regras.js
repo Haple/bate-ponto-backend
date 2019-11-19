@@ -21,20 +21,20 @@ module.exports = {
         if (senhaCerta) return usuario;
         else throw new Error("Credenciais inválidas");
     },
-    async ehEmpregado(cod_usuario) {
+    async buscaEmpregado(cod_usuario) {
         const empregado = (await db.query(`
         SELECT * FROM empregados
         WHERE cod_usuario = $1
         `,
             [cod_usuario])).rows[0];
-        return (empregado ? true : false);
+        return empregado;
     },
-    async ehAdmin(cod_usuario) {
+    async buscaAdmin(cod_usuario) {
         const admin = (await db.query(`
         SELECT * FROM administradores
         WHERE cod_usuario = $1
         `,
             [cod_usuario])).rows[0];
-        return (admin ? true : false);
+        return admin;
     }
 }

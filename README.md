@@ -48,8 +48,8 @@ para confirmar que a aplicação está de pé.
 
 - [ ] Mobile
 	- [X] Login empregado (Aleph)
-	- [ ] Bater ponto (Mobile: Gabriel, Backend: Daniel)
-	- [ ] Listar pontos (Gabriel)
+	- [X] Bater ponto (Daniel)
+	- [X] Listar pontos (Gabriel)
 	- [ ] Pedir abono (Daniel)
 	- [ ] (Opcional) Lembrete de ponto
 	
@@ -93,7 +93,7 @@ jornada [OK]
 		POST /jornadas - criar jornada
 		DELETE /jornadas/{id_jornada} - excluir jornada
 
-ponto
+ponto [OK]
 	Web
 		GET /pontos  - listar pontos do empregado
 		POST /pontos - bater ponto
@@ -107,34 +107,5 @@ abono
 		Web
 			POST /abonos/{id_abono}/avaliacoes - criar avaliação p/ um abono
 
-```
-
-
-# Pseudocódigos
-
-## bate ponto
-
-```
-
-registra novo ponto
-busca qtd de horas diarias do empregado
-busca os pontos que o empregado já bateu hoje
-pontos = [
-		{hora:7,...},
-		{hora:11,...},
-		{hora:13,...},
-		{hora:18,...}		
-	]
-separa em entradas e saidas
-entradas = [{hora:7},{hora:13}]
-saidas = [{hora:11},{hora:18}]
-horas trabalhadas = 0
-se a qtd de saidas for maior que 0
-	para cada saida
-		horas trabalhadas += saida - entrada
-saldo do dia = horas trabalhadas - horas diarias
-atualiza banco de horas do empregado
-		
-```
 
 Senhas fortes: https://www.grc.com/passwords.htm
