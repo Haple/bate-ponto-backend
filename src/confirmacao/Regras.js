@@ -4,7 +4,7 @@
  * ou serviços de terceiros.
  * 
  */
-const db = require('../db');
+const db = require('../config/database');
 const uuid = require("uuid/v4");
 const { addDays } = require("date-fns");
 

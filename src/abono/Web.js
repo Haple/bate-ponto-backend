@@ -5,52 +5,83 @@
  * 
  */
 const router = require("express").Router();
-const { checaJWT } = require("../sessao/Validacoes");
-const multer  = require("../multer");
-const flehelper = require("../file-helper");
-const { ehPedidoValido } = require("./Validacoes");
-const { criarAbono, listarAbono } = require("./Regras");
+const { checaJWT, ehAdmin, ehEmpregado } = require("../sessao/Validacoes");
+const upload = require("../config/multer");
+const S3 = require("../config/S3");
+const { checaCadastro, checaEnvioAnexo, checaAvaliacao } = require("./Validacoes");
+const { checaDownload } = require("./Validacoes");
+const { criarAbono, listarAbonosEmpregado, listarAbonos } = require("./Regras");
+const { avaliarAbono, addAnexo, buscarAbono } = require("./Regras");
 
-// rotas dos abonos
-router.post("/", checaJWT, ehPedidoValido, async (req, res) => {
-	const { data_solicitacao, data_abono, motivo } = req.body;
-	const { cod_usuario } = req.usuario;
+router.use(checaJWT);
 
+router.get("/", async (req, res) => {
+	const { cod_usuario, cod_empresa, admin, empregado } = req.usuario;
+	const { buscarTudo } = req.query;
 	try {
-		criarAbono(motivo,data_solicitacao,data_abono,cod_usuario);
-
-		return res.status(200).json({ msg: "Sucesso, cadastro de abono"});
-
+		let abonos = [];
+		if (buscarTudo && admin) {
+			abonos = await listarAbonos(cod_empresa);
+		} else if (empregado) {
+			abonos = await listarAbonosEmpregado(cod_usuario);
+		} else {
+			return res.status(400).json({ erro: "Usuário não é empregado" });
+		}
+		return res.json({ abonos });
 	} catch (erro) {
 		return res.status(500).json({ erro: erro.message });
 	}
-}),
+});
 
-router.post("/:id_abono/anexos", checaJWT, multer.single('image'),  async (req, res) => {
-	if (req.file) {
-		data = flehelper.compressImage(req.file, 100)
-				.then(newPath => {
-					return res.status(200).json({ msg: "Imagem recebida e cadastrada"});
-				})
-				.catch(err => console.log(err) );
-	}
-}),
-
-router.get("/listaAnexos", checaJWT, async (req, res) => {
+router.post("/", ehEmpregado, checaCadastro, async (req, res) => {
+	const { data_abonada, motivo } = req.body;
 	const { cod_usuario } = req.usuario;
-	var abonos = [];
 	try {
-
-		abonos.push(listarAbono(cod_usuario));
-		
-		return res.status(200).json({ msg: "Sucesso, cadastro de abono"});
-
+		const abono = await criarAbono(motivo, data_abonada, cod_usuario);
+		return res.json({ abono });
 	} catch (erro) {
 		return res.status(500).json({ erro: erro.message });
 	}
+});
 
-})
+router.post("/:cod_abono/anexos", ehEmpregado, upload.single('anexo'),
+	checaEnvioAnexo, async (req, res) => {
+		const { cod_usuario } = req.usuario;
+		const { cod_abono } = req.params;
+		const { key: anexo } = req.file;
+		try {
+			const abono = await addAnexo(anexo, cod_abono, cod_usuario);
+			return res.json(abono);
+		} catch (erro) {
+			return res.status(400).json({ erro: erro.message });
+		}
+	});
 
-require('./avaliacao')(router);
+router.post("/:cod_abono/avaliacoes", ehAdmin,
+	checaAvaliacao, async (req, res) => {
+		const { cod_usuario } = req.usuario;
+		const { cod_abono } = req.params;
+		const { avaliacao, aprovado } = req.body;
+		try {
+			const abono = await
+				avaliarAbono(avaliacao, aprovado, cod_usuario, cod_abono);
+			return res.json(abono);
+		} catch (erro) {
+			return res.status(400).json({ erro: erro.message });
+		}
+	});
+
+router.get("/:cod_abono/anexos", ehEmpregado,
+	checaDownload, async (req, res) => {
+		const { cod_usuario } = req.usuario;
+		const { cod_abono } = req.params;
+		try {
+			const abono = await buscarAbono(cod_usuario, cod_abono);
+			const arquivo = await new S3("bateponto").getItem(abono.anexo);
+			return arquivo.pipe(res);
+		} catch (erro) {
+			return res.status(404).json({ erro: erro.message });
+		}
+	});
 
 module.exports = app => app.use('/abonos', router);

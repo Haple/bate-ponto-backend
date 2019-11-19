@@ -1,4 +1,3 @@
-DROP TABLE avaliacoes_abono;
 DROP TABLE abonos;
 DROP TABLE pontos;
 DROP TABLE empregados;
@@ -67,15 +66,11 @@ CREATE TABLE pontos(
 CREATE TABLE abonos(
 	codigo serial primary key,
 	motivo varchar,
-	anexo bytea,
+	anexo varchar,
 	data_solicitacao timestamp,
 	data_abonada date,
-	cod_empregado int references empregados
-);
-
-CREATE TABLE avaliacoes_abono(
 	aprovado boolean,
-	motivo varchar,
-	cod_abono int primary key references abonos,
+	avaliacao varchar,
+	cod_empregado int references empregados,
 	cod_admin int references administradores
 );

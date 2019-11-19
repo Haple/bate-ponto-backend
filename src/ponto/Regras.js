@@ -7,7 +7,7 @@
 const startOfToday = require('date-fns/startOfToday');
 const startOfYesterday = require('date-fns/startOfYesterday');
 const { differenceInMinutes, subMonths } = require("date-fns");
-const db = require("../db");
+const db = require("../config/database");
 
 module.exports = {
   async atualizaBancoDeHoras(saldoAtual, cod_empregado) {

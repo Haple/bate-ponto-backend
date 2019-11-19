@@ -5,49 +5,80 @@
  * erro na checagem dos dados de entrada.
  * 
  */
+const { parse } = require("date-fns")
+
 module.exports = {
-    ehPedidoValido(req, res, next) {
-        const { cod_usuario, data_solicitacao, data_abono, motivo } = req.body;
+    checaCadastro(req, res, next) {
+        let { data_abonada, motivo } = req.body;
         let erros = [];
 
-        if (!cod_usuario) erros.push({ erro: "Código do usuário obrigatório" });
-        else if(!Number.isInteger(parseInt(cod_usuario))) erros.push({ erro: "Código invalido" });
+        if (!data_abonada || data_abonada.trim() == "")
+            erros.push({ erro: "Data abonada é obrigatória" });
+        else {
+            data_abonada = parse(data_abonada, 'dd/MM/yyyy', new Date());
+            req.body.data_abonada = data_abonada;
+            if (data_abonada == 'Invalid Date')
+                erros.push({ erro: "Data abonada inválida" });
+            if (data_abonada > new Date())
+                erros.push({ erro: "Data abonada deve ser anterior a hoje" });
+        }
 
-        if (!data_solicitacao) erros.push({ erro: "Data da Solicitação obrigatória" });
-        else if(!validaData(data_solicitacao)) erros.push({ erro: "Data a Solicitação invalida" });
-            
-        if (!data_abono) erros.push({ erro: "Data do Abono obrigatório" });
-        else if(!validaData(data_abono)) erros.push({ erro: "Data do Abono invalida" });
+        if (!motivo || motivo.trim() == "")
+            erros.push({ erro: "Motivo obrigatório" });
 
-        if (!validaPeriodo(data_abono)) erros.push({ erro: "Solicitação de Abono incorreta" });
+        if (erros.length > 0)
+            res.status(400).json({ erros: erros });
+        else
+            next();
+    },
+    checaEnvioAnexo(req, res, next) {
+        const { file } = req;
+        const { cod_abono } = req.params;
 
-        if(!motivo) erros.push({ erro: "Motivo obrigatório" });
+        let erros = [];
 
+        if (!file) erros.push({ erro: "Anexo obrigatório" });
 
-        if (erros.length > 0) res.status(400).json({ erros: erros }); 
-        else next();
-    }
+        const numeroRegex = /^[0-9]*$/;
+        if (!cod_abono) erros.push({ erro: "Código do abono obrigatório" });
+        if (!numeroRegex.test(cod_abono)) erros.push({ erro: "Código do abono inválido" });
+
+        if (erros.length > 0)
+            res.status(400).json({ erros: erros });
+        else
+            next();
+    },
+
+    checaDownload(req, res, next) {
+        const { cod_abono } = req.params;
+
+        let erros = [];
+
+        const numeroRegex = /^[0-9]*$/;
+        if (!cod_abono) erros.push({ erro: "Código do abono obrigatório" });
+        if (!numeroRegex.test(cod_abono)) erros.push({ erro: "Código do abono inválido" });
+
+        if (erros.length > 0)
+            res.status(400).json({ erros: erros });
+        else
+            next();
+    },
+
+    checaAvaliacao(req, res, next) {
+        const { cod_abono } = req.params;
+        const { avaliacao } = req.body;
+
+        let erros = [];
+
+        const numeroRegex = /^[0-9]*$/;
+        if (!cod_abono) erros.push({ erro: "Código do abono obrigatório" });
+        if (!numeroRegex.test(cod_abono)) erros.push({ erro: "Código do abono inválido" });
+
+        if (!avaliacao || avaliacao.trim() == "") erros.push({ erro: "Avaliação obrigatória" });
+
+        if (erros.length > 0)
+            res.status(400).json({ erros: erros });
+        else
+            next();
+    },
 };
-
-function validaData(data) {
-    const dataRegex = /(\d{4})[-.\/](\d{2})[-.\/](\d{2})/;
-    if(!dataRegex.test(data))
-        return false;
-    return true;
-}
-
-function validaPeriodo(data) {
-
-    var parametro = data.split('/');
-    var date = new Date();
-
-    const ano = parametro[0];
-    const mes = parametro[1];
-    const dia = parametro[2];
-
-    parametro = new Date(ano, mes - 1, dia);
-
-    if(parametro.getTime() > date.getTime()) return false;
-
-    return true;
-}
