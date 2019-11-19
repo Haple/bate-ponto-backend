@@ -7,16 +7,20 @@
 const router = require("express").Router();
 const jwt = require('jsonwebtoken');
 const { checaLogin } = require("./Validacoes");
-const { checaCredenciais, ehEmpregado, ehAdmin } = require("./Regras");
+const { checaCredenciais, buscaEmpregado, buscaAdmin } = require("./Regras");
 
 router.post("/", checaLogin, async (req, res) => {
 	const { email, senha } = req.body;
 	try {
 		const usuario = await checaCredenciais(email, senha);
-		const empregado = await ehEmpregado(usuario.codigo);
-		const admin = await ehAdmin(usuario.codigo);
+		const empregado = await buscaEmpregado(usuario.codigo);
+		const admin = await buscaAdmin(usuario.codigo);
 		const token = jwt.sign({
-			...usuario, admin, empregado
+			...usuario,
+			...admin,
+			...empregado,
+			admin: admin ? true : false,
+			empregado: empregado ? true : false,
 		}, process.env.SECRET, {
 			expiresIn: 86400 // expira em 24 horas
 		});
