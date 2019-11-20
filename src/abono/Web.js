@@ -14,10 +14,10 @@ const { criarAbono, listarAbono } = require("./Regras");
 // rotas dos abonos
 router.post("/", checaJWT, ehPedidoValido, async (req, res) => {
 	const { data_solicitacao, data_abono, motivo } = req.body;
-	const { cod_usuario } = req.usuario;
+	const { codigo } = req.usuario;
 
 	try {
-		criarAbono(motivo,data_solicitacao,data_abono,cod_usuario);
+		criarAbono(motivo,data_solicitacao,data_abono,codigo);
 
 		return res.status(200).json({ msg: "Sucesso, cadastro de abono"});
 
@@ -36,14 +36,13 @@ router.post("/:id_abono/anexos", checaJWT, multer.single('image'),  async (req, 
 	}
 }),
 
-router.get("/listaAnexos", checaJWT, async (req, res) => {
-	const { cod_usuario } = req.usuario;
-	var abonos = [];
+router.get("/listaAbonos", checaJWT, async (req, res) => {
+	const { codigo } = req.usuario;
 	try {
 
-		abonos.push(listarAbono(cod_usuario));
+		const abonos =  await listarAbono(codigo);
 		
-		return res.status(200).json({ msg: "Sucesso, cadastro de abono"});
+		return res.status(200).json({ abonos});
 
 	} catch (erro) {
 		return res.status(500).json({ erro: erro.message });

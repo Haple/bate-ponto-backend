@@ -7,11 +7,8 @@
  */
 module.exports = {
     ehPedidoValido(req, res, next) {
-        const { cod_usuario, data_solicitacao, data_abono, motivo } = req.body;
+        const { data_solicitacao, data_abono, motivo } = req.body;
         let erros = [];
-
-        if (!cod_usuario) erros.push({ erro: "Código do usuário obrigatório" });
-        else if(!Number.isInteger(parseInt(cod_usuario))) erros.push({ erro: "Código invalido" });
 
         if (!data_solicitacao) erros.push({ erro: "Data da Solicitação obrigatória" });
         else if(!validaData(data_solicitacao)) erros.push({ erro: "Data a Solicitação invalida" });

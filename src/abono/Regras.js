@@ -8,25 +8,24 @@ const db = require('../db');
 const bcrypt = require("bcryptjs");
 
 module.exports = {
-    async criarAbono(motivo,data_solicitacao,data_abono,cod_usuario) {
-        
+    async criarAbono(motivo,data_solicitacao,data_abono,codigo) {
         const abono = (await db.query (`
         INSERT INTO abonos 
-        (motivo,data_solicitacao,data_abono,cod_usuario)
+        (motivo,data_solicitacao,data_abonada,cod_empregado)
         VALUES ($1,$2,$3,$4)
         RETURNING
-        motivo,data_solicitacao,data_abono,cod_usuario`,
-        [motivo,data_solicitacao,data_abono,cod_usuario])).rows[0];
+        *`,
+        [motivo,data_solicitacao,data_abono,codigo])).rows[0];
 
         return abono;
     },
 
-    async listarAbono(cod_usuario) {
-        const abono = (await db.query(`
+    async listarAbono(codigo) {
+        const abonos = (await db.query(`
         SELECT * FROM abonos
         WHERE cod_empregado = $1`,
-        [motivo,data_solicitacao,data_abono,cod_usuario])).rows[0];
+        [codigo])).rows;
         
-        return abono;
+        return abonos;
     }
 }
