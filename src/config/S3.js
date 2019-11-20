@@ -16,7 +16,6 @@ class S3 {
   }
 
   async getItem(itemName) {
-    console.log(`Retrieving item from bucket: ${this.bucketName}, key: ${itemName}`);
     return this.service.getObject({
       Bucket: this.bucketName,
       Key: itemName

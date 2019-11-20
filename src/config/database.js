@@ -1,4 +1,3 @@
-require('dotenv').config();
 var types = require('pg').types;
 const { Pool } = require('pg');
 const ehProducao = process.env.NODE_ENV === 'production';

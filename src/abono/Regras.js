@@ -5,9 +5,21 @@
  * 
  */
 const db = require('../config/database');
+const { buscaEmpregado } = require("../empregado/Regras");
+const { buscarJornada } = require("../jornada/Regras");
+const { atualizaBancoDeHoras } = require('../ponto/Regras')
 
 module.exports = {
     async criarAbono(motivo, data_abonada, cod_empregado) {
+        const abonoJaExiste = (await db.query(`
+            SELECT * FROM abonos
+            WHERE cod_empregado = $1
+            AND data_abonada = $2`,
+            [cod_empregado, data_abonada])).rows[0];
+
+        if (abonoJaExiste)
+            throw new Error("Abono já solicitado");
+
         const abono = (await db.query(`
             INSERT INTO abonos 
             (motivo,data_solicitacao,data_abonada,cod_empregado)
@@ -50,7 +62,7 @@ module.exports = {
         return abonos;
     },
 
-    async avaliarAbono(avaliacao, aprovado, cod_admin, cod_abono) {
+    async atualizaAbono(avaliacao, aprovado, cod_admin, cod_abono) {
         const abono = (await db.query(`
             UPDATE abonos 
             SET avaliacao = $1,
@@ -64,6 +76,12 @@ module.exports = {
             throw new Error("Esse abono já foi avaliado");
         }
         return { ...abono };
+    },
+
+    async abonar(cod_empresa, cod_usuario) {
+        const { cod_jornada, banco_horas } = await buscaEmpregado(cod_empresa, cod_usuario);
+        const { carga_diaria } = await buscarJornada(cod_jornada);
+        await atualizaBancoDeHoras(banco_horas + carga_diaria, cod_usuario);
     },
 
     async addAnexo(anexo, cod_abono, cod_empregado) {

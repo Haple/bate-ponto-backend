@@ -19,7 +19,7 @@ module.exports = {
             req.body.data_abonada = data_abonada;
             if (data_abonada == 'Invalid Date')
                 erros.push({ erro: "Data abonada inválida" });
-            if (data_abonada > new Date())
+            if (data_abonada >= new Date())
                 erros.push({ erro: "Data abonada deve ser anterior a hoje" });
         }
 

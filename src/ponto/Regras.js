@@ -39,25 +39,26 @@ module.exports = {
     }
   },
 
-  async buscarJornada(cod_jornada) {
-    return (await db.query(`
-      SELECT * from jornadas
-      WHERE codigo = $1`, [cod_jornada])).rows[0];
-  },
-
   async buscarEmpregados() {
     return (await db.query(`
       SELECT * from empregados
       `)).rows;
   },
 
-  async buscarPontos(cod_empregado) {
+  async buscarPontos(cod_empregado, cod_empresa = 0) {
     return (await db.query(`
-      SELECT * FROM pontos
-      WHERE cod_empregado = $1
-      AND criado_em >= $2
-      ORDER BY codigo DESC
-      `, [cod_empregado, subMonths(new Date(), 1)])).rows;
+      SELECT p.* FROM pontos p
+      INNER JOIN usuarios u
+      ON u.codigo = p.cod_empregado
+      WHERE p.cod_empregado = $1
+      AND ($2 = 0 or u.cod_empresa = $2)
+      AND p.criado_em >= $3
+      ORDER BY p.codigo DESC
+      `, [
+      cod_empregado,
+      cod_empresa
+      , subMonths(new Date(), 1)
+    ])).rows;
   },
 
   async buscarPontosDeOntem(cod_empregado) {

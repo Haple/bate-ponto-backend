@@ -8,6 +8,13 @@ const db = require('../config/database');
 const { diferencaDeHorario } = require("../util/Horario");
 
 module.exports = {
+
+    async buscarJornada(cod_jornada) {
+        return (await db.query(`
+          SELECT * from jornadas
+          WHERE codigo = $1`, [cod_jornada])).rows[0];
+    },
+
     async jornadaJaExistente(cod_empresa, nome) {
         const jornada = (await db.query(`
             SELECT * FROM jornadas
