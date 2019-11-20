@@ -44,11 +44,12 @@ CREATE TABLE jornadas(
 	saida1 time,
 	entrada2 time,
 	saida2 time,
-	qtd_horas_diarias time
+	carga_diaria int
 );
 
 
 CREATE TABLE empregados(
+	banco_horas int,
 	enviar_lembrete boolean,
 	cod_jornada int references jornadas,
 	cod_usuario int primary key references usuarios

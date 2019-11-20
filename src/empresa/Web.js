@@ -6,9 +6,8 @@
  */
 const router = require("express").Router();
 const { checaCadastro } = require("./Validacoes");
-const { criarEmpresa, criarUsuario, criarAdmin } = require("./Regras");
-const { cadastroJaExistente, enviarEmailConfirmacao } = require("./Regras");
-const { criarConfirmacao } = require("../confirmacao/Regras");
+const { criarEmpresa, criarUsuario, criarAdmin, cadastroJaExistente } = require("./Regras");
+const { criarConfirmacao, enviarEmailConfirmacao } = require("../confirmacao/Regras");
 
 router.post("/", checaCadastro, async (req, res) => {
 	const { cnpj, razao_social } = req.body;

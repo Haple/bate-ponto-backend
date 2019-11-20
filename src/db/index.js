@@ -1,6 +1,13 @@
 require('dotenv').config();
+var types = require('pg').types;
 const { Pool } = require('pg');
 const ehProducao = process.env.NODE_ENV === 'production';
+
+//configuração para que a data do banco seja convertida
+//corretamente para o fuso horário do servidor 
+var timestampOID = 1114;
+types.setTypeParser(timestampOID,
+	(stringValue) => new Date(Date.parse(stringValue + "+0000")));
 
 //formato da string de conexão
 //postgresql://USER:PASSWORD@HOST:PORT/DATABASE

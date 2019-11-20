@@ -6,7 +6,6 @@
  */
 const db = require('../db');
 const bcrypt = require("bcryptjs");
-const mailer = require("nodemailer");
 
 module.exports = {
     async cadastroJaExistente(cnpj, cpf, email) {
@@ -56,23 +55,5 @@ module.exports = {
             `,
             [cod_usuario])).rows[0];
         return admin;
-    },
-    async enviarEmailConfirmacao(cod_confirmacao, email, nome) {
-        const transporter = mailer.createTransport({
-            service: 'gmail',
-            auth: {
-                   user: 'bateponto2019@gmail.com',
-                   pass: 'batepontoem2019'
-               }
-           });
-        await transporter.sendMail({
-            from: '"Bate ponto" <no-reply@bateponto.com>', // sender address
-            to: email,
-            subject: 'Confirmação de e-mail',
-            html: `
-                ${nome}? É você? Se sim 
-                <a href="https://surge.sh?cod=${cod_confirmacao}">clique aqui</a>.
-            `
-        });
     }
 }
