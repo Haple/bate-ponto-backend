@@ -40,7 +40,7 @@ module.exports = {
         req.body.celular = celular.replace(/(?!\w|\s)./g, '').replace(/\s/g, '');
 
         if (erros.length > 0) {
-            res.status(400).json({ erros: erros });
+            return res.status(400).json({ erros: erros });
         } else {
             next();
         }

@@ -39,7 +39,7 @@ module.exports = {
         if (!numeroRegex.test(cod_jornada)) erros.push({ erro: "Código da jornada inválido" });
 
         if (erros.length > 0) {
-            res.status(400).json({ erros: erros });
+            return res.status(400).json({ erros: erros });
         } else {
             next();
         }
@@ -70,12 +70,12 @@ module.exports = {
         if (!numeroRegex.test(cod_jornada)) erros.push({ erro: "Código da jornada inválido" });
 
         if (erros.length > 0) {
-            res.status(400).json({ erros: erros });
+            return res.status(400).json({ erros: erros });
         } else {
             next();
         }
     },
-    checaExclusao(req, res, next) {
+    checaCodEmpregado(req, res, next) {
         const { cod_empregado } = req.params;
         let erros = [];
 
@@ -83,7 +83,7 @@ module.exports = {
         if (!numeroRegex.test(cod_empregado)) erros.push({ erro: "Código do empregado inválido" });
 
         if (erros.length > 0) {
-            res.status(400).json({ erros: erros });
+            return res.status(400).json({ erros: erros });
         } else {
             next();
         }

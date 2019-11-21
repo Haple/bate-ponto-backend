@@ -39,7 +39,7 @@ module.exports = {
             erros.push({ erro: "Saída 2 precisa ser maior que a Entrada 2" });
 
         if (erros.length > 0) {
-            res.status(400).json({ erros: erros });
+            return res.status(400).json({ erros: erros });
         } else {
             next();
         }
@@ -52,7 +52,7 @@ module.exports = {
         if (!numeroRegex.test(cod_jornada)) erros.push({ erro: "Código da jornada inválido" });
 
         if (erros.length > 0) {
-            res.status(400).json({ erros: erros });
+            return res.status(400).json({ erros: erros });
         } else {
             next();
         }

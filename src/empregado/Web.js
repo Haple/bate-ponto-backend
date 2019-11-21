@@ -5,18 +5,21 @@
  * 
  */
 const router = require("express").Router();
-const { checaCadastro, checaAtualizacao, checaExclusao } = require("./Validacoes");
+const { checaCadastro, checaAtualizacao, checaCodEmpregado } = require("./Validacoes");
 const { criarEmpregado, cadastroJaExistente, buscaEmpregado } = require("./Regras");
 const { atualizaEmpregado, buscaEmpregados, deletarEmpregado } = require("./Regras");
-const { jornadaExiste } = require("./Regras");
-const { criarConfirmacao, enviarEmailConfirmacao } = require("../confirmacao/Regras");
+const { buscarJornada } = require("../jornada/Regras");
+const { solicitarConfirmacao } = require("../confirmacao/Regras");
 const { criarUsuario } = require("../empresa/Regras");
 const { checaJWT, ehAdmin } = require("../sessao/Validacoes");
 
 router.use(checaJWT);
 router.use(ehAdmin);
 
-router.get("/:cod_empregado", async (req, res) => {
+/**
+ * Buscar um empregado
+ */
+router.get("/:cod_empregado", checaCodEmpregado, async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const { cod_empregado } = req.params;
 	try {
@@ -27,7 +30,10 @@ router.get("/:cod_empregado", async (req, res) => {
 	}
 });
 
-router.delete("/:cod_empregado", checaExclusao, async (req, res) => {
+/**
+ * Deletar um empregado
+ */
+router.delete("/:cod_empregado", checaCodEmpregado, async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const { cod_empregado } = req.params;
 	try {
@@ -38,6 +44,9 @@ router.delete("/:cod_empregado", checaExclusao, async (req, res) => {
 	}
 });
 
+/**
+ * Buscar todos os empregados da empresa
+ */
 router.get("/", async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const { nome, cod_jornada } = req.query;
@@ -45,6 +54,9 @@ router.get("/", async (req, res) => {
 	return res.json(empregados);
 });
 
+/**
+ * Atualizar um empregado
+ */
 router.put("/:cod_empregado", checaAtualizacao, async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const { cod_empregado } = req.params;
@@ -63,17 +75,20 @@ router.put("/:cod_empregado", checaAtualizacao, async (req, res) => {
 	}
 });
 
+/**
+ * Criar um empregado
+ */
 router.post("/", checaCadastro, async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const { cpf, nome, email, senha, celular, cod_jornada } = req.body;
 	try {
 		await cadastroJaExistente(cpf, email);
-		await jornadaExiste(cod_jornada, cod_empresa);
+		await buscarJornada(cod_jornada, cod_empresa);
 		const usuario = await criarUsuario(cod_empresa, cpf
 			, nome, email, senha, celular);
 		const empregado = await criarEmpregado(usuario.codigo, cod_jornada);
-		const cod_confirmacao = await criarConfirmacao(usuario.codigo);
-		enviarEmailConfirmacao(cod_confirmacao, email, nome);
+		const urlAtual = req.protocol + '://' + req.get('host');
+		await solicitarConfirmacao(usuario.codigo, email, nome, urlAtual);
 		return res.status(201).json({ ...usuario, ...empregado });
 	} catch (erro) {
 		return res.status(400).json({ erro: erro.message });

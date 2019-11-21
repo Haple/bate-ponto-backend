@@ -7,28 +7,57 @@
 const router = require("express").Router();
 const cron = require('node-cron');
 const { toDate } = require("date-fns");
-const { checaJWT, ehEmpregado } = require("../sessao/Validacoes");
-const { checaPonto } = require("./Validacoes");
-const { salvarPonto, buscarEmpregados, buscarJornada, } = require("./Regras");
+const { checaJWT, ehEmpregado, ehAdmin } = require("../sessao/Validacoes");
+const { checaPonto, checaBusca } = require("./Validacoes");
+const { buscarJornada } = require("../jornada/Regras");
+const { salvarPonto, buscarEmpregados, } = require("./Regras");
 const { buscarPontosDeOntem, atualizaBancoDeHoras } = require("./Regras");
 const { calculaSaldo, buscarPontos } = require("./Regras");
 
 router.use(checaJWT);
-router.use(ehEmpregado);
 
-router.post("/", checaPonto, async (req, res) => {
+/**
+ * Bater ponto
+ */
+router.post("/", ehEmpregado, checaPonto, async (req, res) => {
 	const { codigo } = req.usuario;
 	const { latitude, longitude, localizacao } = req.body;
 	const ponto = await salvarPonto(latitude, longitude, localizacao, codigo);
 	return res.json(ponto);
 });
 
-router.get("/", async (req, res) => {
+/**
+ * Buscar pontos (pessoal)
+ */
+router.get("/", ehEmpregado, async (req, res) => {
 	const { codigo } = req.usuario;
 	const pontos = await buscarPontos(codigo);
 	return res.json(pontos);
 });
 
+/**
+ * Buscar pontos de um empregado (admin)
+ */
+router.get("/:cod_empregado", ehAdmin, checaBusca, async (req, res) => {
+	const { cod_empresa } = req.usuario;
+	const { cod_empregado } = req.params;
+	try {
+		const pontos = await buscarPontos(cod_empregado, cod_empresa);
+		return res.status(200).json(pontos);
+	} catch (erro) {
+		return res.status(404).json({ erro: erro.message })
+	}
+});
+
+/**
+ * Cálculo de banco de horas executado 2h de terça a sábado.
+ * Esse job calcula o banco de horas de todos os empregados,
+ * se baseando nos pontos registrados no dia anterior, ou
+ * seja, a execução de terça-feira calcula o banco de horas
+ * se baseando nos pontos registrados na segunda-feira, e
+ * assim por diante.
+ *  
+ */
 cron.schedule('0 0 2 * * TUE-SAT', async () => {
 	console.log("Iniciando atualização do banco de horas...");
 	const empregados = await buscarEmpregados();

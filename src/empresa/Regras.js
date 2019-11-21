@@ -4,7 +4,7 @@
  * ou serviços de terceiros.
  * 
  */
-const db = require('../db');
+const db = require('../config/database');
 const bcrypt = require("bcryptjs");
 
 module.exports = {

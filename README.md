@@ -50,14 +50,14 @@ para confirmar que a aplicação está de pé.
 	- [X] Login empregado (Aleph)
 	- [X] Bater ponto (Daniel)
 	- [X] Listar pontos (Gabriel)
-	- [ ] Pedir abono (Daniel)
+	- [X] Pedir abono (Daniel)
 	- [ ] (Opcional) Lembrete de ponto
 	
 - [ ] Web
 	- [X] Cadastro empresa (Aleph)
 	- [X] Login admin (Aleph)
-	- [ ] Listar abonos (Daniel)
-	- [ ] Avaliar abono (Gabriel)
+	- [X] Listar abonos (Daniel)
+	- [X] Avaliar abono (Gabriel)
 	- [X] Cadastrar empregado (Aleph)
 	- [X] Listar empregados (Aleph)
 	- [ ] (Opcional) Relatório de pontos
