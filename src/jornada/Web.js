@@ -13,6 +13,9 @@ const { buscarJornadas, deletarJornada } = require("./Regras");
 router.use(checaJWT);
 router.use(ehAdmin);
 
+/**
+ * Deletar jornada
+ */
 router.delete("/:cod_jornada", checaExclusao, async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const { cod_jornada } = req.params;
@@ -24,12 +27,18 @@ router.delete("/:cod_jornada", checaExclusao, async (req, res) => {
 	}
 });
 
+/**
+ * Listar jornadas
+ */
 router.get("/", async (req, res) => {
 	const { cod_empresa } = req.usuario;
 	const jornadas = await buscarJornadas(cod_empresa);
 	return res.json(jornadas);
 });
 
+/**
+ * Criar jornada
+ */
 router.post("/", checaCadastro, async (req, res) => {
 	const { nome, entrada1, saida1 } = req.body;
 	const { entrada2, saida2 } = req.body;

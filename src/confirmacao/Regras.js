@@ -7,19 +7,31 @@
 const db = require('../config/database');
 const uuid = require("uuid/v4");
 const { addDays } = require("date-fns");
-
 const mailer = require("nodemailer");
-
+const { EMAIL, EMAIL_SENHA } = process.env;
 module.exports = {
-    async criarConfirmacao(cod_usuario) {
-        const codigo = uuid();
+    async solicitarConfirmacao(cod_usuario, email, nome, url) {
+        const cod_confirmacao = uuid();
         await db.query(`
             INSERT INTO confirmacoes
             (codigo, data_expiracao,cod_usuario)
             VALUES ($1, $2, $3)
             `,
-            [codigo, addDays(new Date(), 2), cod_usuario]);
-        return codigo;
+            [cod_confirmacao, addDays(new Date(), 2), cod_usuario]);
+        const transporter = mailer.createTransport({
+            service: 'gmail',
+            auth: { user: EMAIL, pass: EMAIL_SENHA }
+        });
+        await transporter.sendMail({
+            from: '"Bate ponto" <no-reply@bateponto.com>',
+            to: email, subject: 'Confirmação de e-mail',
+            html: `
+                    ${nome}? É você? Se sim 
+                    <a href="${url}/confirmacoes/${cod_confirmacao}">
+                        clique aqui
+                    </a>.
+                `
+        });
     },
     async confirmar(cod_confirmacao) {
         const confirmacao = (await db.query(`
@@ -37,23 +49,4 @@ module.exports = {
             [confirmacao.cod_usuario])).rows[0];
         return usuario.email;
     },
-    async enviarEmailConfirmacao(cod_confirmacao, email, nome) {
-        const transporter = mailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL,
-                pass: process.env.EMAIL_SENHA
-            }
-        });
-
-        await transporter.sendMail({
-            from: '"Bate ponto" <no-reply@bateponto.com>',
-            to: email,
-            subject: 'Confirmação de e-mail',
-            html: `
-                ${nome}? É você? Se sim 
-                <a href="https://surge.sh?cod=${cod_confirmacao}">clique aqui</a>.
-            `
-        });
-    }
 }

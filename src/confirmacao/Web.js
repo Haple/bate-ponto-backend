@@ -7,10 +7,13 @@
 const router = require("express").Router();
 const { confirmar } = require("./Regras");
 
-router.post("/:cod_confirmacao", async (req, res) => {
+/**
+ * Confirmar e-mail
+ */
+router.get("/:cod_confirmacao", async (req, res) => {
 	try {
-		const email = await confirmar(req.params.cod_confirmacao);
-		return res.status(200).json({ mensagem: "Usuário confirmado", email });
+		await confirmar(req.params.cod_confirmacao);
+		return res.redirect(process.env.PAGINA_LOGIN);;
 	} catch (error) {
 		return res.status(400).json({ erro: "Código inválido" });
 	}

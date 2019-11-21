@@ -27,7 +27,7 @@ module.exports = {
             erros.push({ erro: "Motivo obrigatório" });
 
         if (erros.length > 0)
-            res.status(400).json({ erros: erros });
+            return res.status(400).json({ erros: erros });
         else
             next();
     },
@@ -44,12 +44,12 @@ module.exports = {
         if (!numeroRegex.test(cod_abono)) erros.push({ erro: "Código do abono inválido" });
 
         if (erros.length > 0)
-            res.status(400).json({ erros: erros });
+            return res.status(400).json({ erros: erros });
         else
             next();
     },
 
-    checaDownload(req, res, next) {
+    checaCodAbono(req, res, next) {
         const { cod_abono } = req.params;
 
         let erros = [];
@@ -59,7 +59,7 @@ module.exports = {
         if (!numeroRegex.test(cod_abono)) erros.push({ erro: "Código do abono inválido" });
 
         if (erros.length > 0)
-            res.status(400).json({ erros: erros });
+            return res.status(400).json({ erros: erros });
         else
             next();
     },
@@ -77,7 +77,7 @@ module.exports = {
         if (!avaliacao || avaliacao.trim() == "") erros.push({ erro: "Avaliação obrigatória" });
 
         if (erros.length > 0)
-            res.status(400).json({ erros: erros });
+            return res.status(400).json({ erros: erros });
         else
             next();
     },

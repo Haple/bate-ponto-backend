@@ -21,7 +21,7 @@ module.exports = {
         if (!senhaRegex.test(senha)) erros.push({ erro: "Senha inválida" });
 
         if (erros.length > 0) {
-            res.status(400).json({ erros: erros });
+            return res.status(400).json({ erros: erros });
         } else {
             next();
         }

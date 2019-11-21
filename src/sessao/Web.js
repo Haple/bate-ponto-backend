@@ -9,6 +9,10 @@ const jwt = require('jsonwebtoken');
 const { checaLogin } = require("./Validacoes");
 const { checaCredenciais, buscaEmpregado, buscaAdmin } = require("./Regras");
 
+/**
+ * Criar sessão, gerando um token utilizado
+ * nas demais interações com o backend.
+ */
 router.post("/", checaLogin, async (req, res) => {
 	const { email, senha } = req.body;
 	try {

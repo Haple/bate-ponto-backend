@@ -15,6 +15,7 @@ module.exports = {
         if (cpfExistente) throw new Error("CPF já cadastrado");
         await emailJaExiste(email);
     },
+
     async criarEmpregado(cod_usuario, cod_jornada) {
         const empregado = (await db.query(`
             INSERT INTO empregados
@@ -25,6 +26,7 @@ module.exports = {
             [cod_usuario, cod_jornada])).rows[0];
         return empregado;
     },
+
     async atualizaEmpregado(cod_empregado, nome, email, celular, cod_jornada) {
         const empregado = (await db.query(`
             UPDATE empregados e
@@ -86,6 +88,7 @@ module.exports = {
             return empregado;
         });
     },
+
     async deletarEmpregado(cod_empresa, cod_empregado) {
         await deletarPontos(cod_empresa, cod_empregado);
         await deletarAbonos(cod_empresa, cod_empregado);
@@ -96,16 +99,6 @@ module.exports = {
             await deletarConfirmacoes(cod_empresa, cod_empregado);
             await deletarUsuario(cod_empresa, cod_empregado);
         }
-    },
-    async jornadaExiste(cod_jornada, cod_empresa) {
-        const jornada = (await db.query(`
-        SELECT * FROM jornadas
-        WHERE codigo = $1
-        AND cod_empresa = $2
-        `, [cod_jornada, cod_empresa])).rows[0];
-        if (!jornada)
-            throw new Error("Código da jornada não encontrado");
-        return jornada;
     },
 
 }

@@ -62,36 +62,42 @@ module.exports = {
         return abonos;
     },
 
-    async atualizaAbono(avaliacao, aprovado, cod_admin, cod_abono) {
+    async atualizaAbono(avaliacao, aprovado, cod_admin, cod_empresa, cod_abono) {
         const abono = (await db.query(`
-            UPDATE abonos 
+            UPDATE abonos a
             SET avaliacao = $1,
             aprovado = $2,
             cod_admin = $3
             WHERE codigo = $4
+            AND cod_empregado IN (
+                SELECT codigo FROM
+                    usuarios
+                WHERE cod_empresa = $5
+            )
             AND cod_admin IS NULL
             RETURNING *`,
-            [avaliacao, aprovado, cod_admin, cod_abono])).rows[0];
-        if (!abono) {
-            throw new Error("Esse abono já foi avaliado");
-        }
+            [avaliacao, aprovado, cod_admin, cod_abono, cod_empresa])).rows[0];
+        if (!abono)
+            throw new Error("Abono não encontrado");
         return { ...abono };
     },
 
     async abonar(cod_empresa, cod_usuario) {
-        const { cod_jornada, banco_horas } = await buscaEmpregado(cod_empresa, cod_usuario);
-        const { carga_diaria } = await buscarJornada(cod_jornada);
+        const { cod_jornada, banco_horas } =
+            await buscaEmpregado(cod_empresa, cod_usuario);
+        const { carga_diaria } = await buscarJornada(cod_jornada, cod_empresa);
         await atualizaBancoDeHoras(banco_horas + carga_diaria, cod_usuario);
     },
 
-    async addAnexo(anexo, cod_abono, cod_empregado) {
+    async addAnexo(anexo, anexo_original, cod_abono, cod_empregado) {
         const abono = (await db.query(`
             UPDATE abonos 
-            SET anexo = $1
-            WHERE codigo = $2
-            AND cod_empregado = $3
+            SET anexo = $1,
+            anexo_original = $2
+            WHERE codigo = $3
+            AND cod_empregado = $4
             RETURNING *`,
-            [anexo, cod_abono, cod_empregado])).rows[0];
+            [anexo, anexo_original, cod_abono, cod_empregado])).rows[0];
         if (!abono) {
             throw new Error("Abono não encontrado")
         }
