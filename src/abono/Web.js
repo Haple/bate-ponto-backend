@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
 		} else {
 			return res.status(400).json({ erro: "Usuário não é empregado" });
 		}
-		return res.json({ abonos });
+		return res.json(abonos);
 	} catch (erro) {
 		return res.status(500).json({ erro: erro.message });
 	}
