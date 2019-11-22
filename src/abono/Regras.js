@@ -101,6 +101,6 @@ module.exports = {
         if (!abono) {
             throw new Error("Abono não encontrado")
         }
-        return { ...abono };
+        return abono;
     },
 }

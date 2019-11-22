@@ -46,7 +46,7 @@ router.post("/", ehEmpregado, checaCadastro, async (req, res) => {
 	const { cod_usuario } = req.usuario;
 	try {
 		const abono = await criarAbono(motivo, data_abonada, cod_usuario);
-		return res.json({ abono });
+		return res.json(abono);
 	} catch (erro) {
 		return res.status(400).json({ erro: erro.message });
 	}
