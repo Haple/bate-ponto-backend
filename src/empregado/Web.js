@@ -9,6 +9,7 @@ const { checaCadastro, checaAtualizacao, checaCodEmpregado } = require("./Valida
 const { criarEmpregado, cadastroJaExistente, buscaEmpregado } = require("./Regras");
 const { atualizaEmpregado, buscaEmpregados, deletarEmpregado } = require("./Regras");
 const { buscarJornada } = require("../jornada/Regras");
+const { buscarPontos } = require("../ponto/Regras");
 const { solicitarConfirmacao } = require("../confirmacao/Regras");
 const { criarUsuario } = require("../empresa/Regras");
 const { checaJWT, ehAdmin } = require("../sessao/Validacoes");
@@ -29,6 +30,22 @@ router.get("/:cod_empregado", checaCodEmpregado, async (req, res) => {
 		return res.status(404).json({ erro: erro.message })
 	}
 });
+
+
+/**
+ * Buscar pontos de um empregado
+ */
+router.get("/:cod_empregado/pontos", checaCodEmpregado, async (req, res) => {
+	const { cod_empresa } = req.usuario;
+	const { cod_empregado } = req.params;
+	try {
+		const pontos = await buscarPontos(cod_empregado, cod_empresa);
+		return res.status(200).json(pontos);
+	} catch (erro) {
+		return res.status(404).json({ erro: erro.message })
+	}
+});
+
 
 /**
  * Deletar um empregado

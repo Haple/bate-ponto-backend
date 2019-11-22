@@ -7,19 +7,20 @@
 const router = require("express").Router();
 const cron = require('node-cron');
 const { toDate } = require("date-fns");
-const { checaJWT, ehEmpregado, ehAdmin } = require("../sessao/Validacoes");
-const { checaPonto, checaBusca } = require("./Validacoes");
+const { checaJWT, ehEmpregado } = require("../sessao/Validacoes");
+const { checaPonto } = require("./Validacoes");
 const { buscarJornada } = require("../jornada/Regras");
 const { salvarPonto, buscarEmpregados, } = require("./Regras");
 const { buscarPontosDeOntem, atualizaBancoDeHoras } = require("./Regras");
 const { calculaSaldo, buscarPontos } = require("./Regras");
 
 router.use(checaJWT);
+router.use(ehEmpregado);
 
 /**
  * Bater ponto
  */
-router.post("/", ehEmpregado, checaPonto, async (req, res) => {
+router.post("/", checaPonto, async (req, res) => {
 	const { codigo } = req.usuario;
 	const { latitude, longitude, localizacao } = req.body;
 	const ponto = await salvarPonto(latitude, longitude, localizacao, codigo);
@@ -29,24 +30,10 @@ router.post("/", ehEmpregado, checaPonto, async (req, res) => {
 /**
  * Buscar pontos (pessoal)
  */
-router.get("/", ehEmpregado, async (req, res) => {
+router.get("/", async (req, res) => {
 	const { codigo } = req.usuario;
 	const pontos = await buscarPontos(codigo);
 	return res.json(pontos);
-});
-
-/**
- * Buscar pontos de um empregado (admin)
- */
-router.get("/:cod_empregado", ehAdmin, checaBusca, async (req, res) => {
-	const { cod_empresa } = req.usuario;
-	const { cod_empregado } = req.params;
-	try {
-		const pontos = await buscarPontos(cod_empregado, cod_empresa);
-		return res.status(200).json(pontos);
-	} catch (erro) {
-		return res.status(404).json({ erro: erro.message })
-	}
 });
 
 /**
