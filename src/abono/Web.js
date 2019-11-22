@@ -16,7 +16,9 @@ const { checaCadastro, checaEnvioAnexo, checaAvaliacao } = require("./Validacoes
 router.use(checaJWT);
 
 /**
- * Listar abonos
+ * Listar abonos.
+ * Cenário 1: usuário é admin e quer listar todos os abonos da empresa;
+ * Cenário 2: usuário é empregado e quer listar apenas o seus abonos;
  */
 router.get("/", async (req, res) => {
 	const { cod_usuario, cod_empresa, admin, empregado } = req.usuario;
