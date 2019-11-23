@@ -51,8 +51,10 @@ module.exports = {
 
     async listarAbonos(cod_empresa) {
         const abonos = (await db.query(`
-            SELECT * FROM abonos
-            WHERE cod_empregado IN (
+            SELECT a.*, u.nome FROM abonos a
+            INNER JOIN usuarios u
+            ON a.cod_empregado = u.codigo
+            WHERE a.cod_empregado IN (
                 SELECT e.cod_usuario FROM empregados e
                 INNER JOIN usuarios u
                 ON e.cod_usuario = u.codigo
@@ -101,6 +103,6 @@ module.exports = {
         if (!abono) {
             throw new Error("Abono não encontrado")
         }
-        return { ...abono };
+        return abono;
     },
 }

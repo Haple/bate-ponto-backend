@@ -23,18 +23,4 @@ module.exports = {
             next();
         }
     },
-    checaBusca(req, res, next) {
-        const { cod_empregado } = req.params;
-
-        let erros = [];
-
-        const numeroRegex = /^[0-9]*$/;
-        if (!cod_empregado) erros.push({ erro: "Código do empregado obrigatório" });
-        if (!numeroRegex.test(cod_empregado)) erros.push({ erro: "Código do empregado inválido" });
-
-        if (erros.length > 0)
-            return res.status(400).json({ erros: erros });
-        else
-            next();
-    }
 }

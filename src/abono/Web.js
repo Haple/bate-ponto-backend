@@ -16,7 +16,9 @@ const { checaCadastro, checaEnvioAnexo, checaAvaliacao } = require("./Validacoes
 router.use(checaJWT);
 
 /**
- * Listar abonos
+ * Listar abonos.
+ * Cenário 1: usuário é admin e quer listar todos os abonos da empresa;
+ * Cenário 2: usuário é empregado e quer listar apenas o seus abonos;
  */
 router.get("/", async (req, res) => {
 	const { cod_usuario, cod_empresa, admin, empregado } = req.usuario;
@@ -30,7 +32,7 @@ router.get("/", async (req, res) => {
 		} else {
 			return res.status(400).json({ erro: "Usuário não é empregado" });
 		}
-		return res.json({ abonos });
+		return res.json(abonos);
 	} catch (erro) {
 		return res.status(500).json({ erro: erro.message });
 	}
@@ -44,7 +46,7 @@ router.post("/", ehEmpregado, checaCadastro, async (req, res) => {
 	const { cod_usuario } = req.usuario;
 	try {
 		const abono = await criarAbono(motivo, data_abonada, cod_usuario);
-		return res.json({ abono });
+		return res.json(abono);
 	} catch (erro) {
 		return res.status(400).json({ erro: erro.message });
 	}
