@@ -22,18 +22,20 @@ router.use(checaJWT);
  */
 router.get("/", async (req, res) => {
 	const { cod_usuario, cod_empresa, admin, empregado } = req.usuario;
-	const { buscarTudo } = req.query;
+	const { buscarTudo, status } = req.query;
 	try {
 		let abonos = [];
 		if (buscarTudo && admin) {
-			abonos = await listarAbonos(cod_empresa);
+			abonos = await listarAbonos(cod_empresa, status);
 		} else if (empregado) {
-			abonos = await listarAbonosEmpregado(cod_usuario);
+			abonos = await listarAbonosEmpregado(cod_usuario, status);
 		} else {
 			return res.status(400).json({ erro: "Usuário não é empregado" });
 		}
 		return res.json(abonos);
 	} catch (erro) {
+		console.log(erro);
+
 		return res.status(500).json({ erro: erro.message });
 	}
 });
