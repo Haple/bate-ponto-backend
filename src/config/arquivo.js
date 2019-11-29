@@ -24,6 +24,7 @@ module.exports = {
 
   uploadTo(bucketName) {
     return multer({
+      limits: { fieldSize: 25 * 1024 * 1024, },
       storage: multerS3({
         s3: s3,
         bucket: bucketName,
