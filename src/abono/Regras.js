@@ -111,12 +111,17 @@ module.exports = {
         }
     },
 
-    async buscarAbono(cod_empregado, cod_abono) {
+    async buscarAbono(cod_abono, cod_empresa) {
         const abono = (await db.query(`
             SELECT * FROM abonos
-            WHERE cod_empregado = $1
-            AND codigo = $2`,
-            [cod_empregado, cod_abono])).rows[0];
+            WHERE codigo = $1
+            AND cod_empregado IN (
+                SELECT e.cod_usuario FROM empregados e
+                INNER JOIN usuarios u
+                ON e.cod_usuario = u.codigo
+                WHERE u.cod_empresa = $2
+            )`,
+            [cod_abono, cod_empresa])).rows[0];
         if (!abono) {
             throw new Error("Abono não encontrado");
         }

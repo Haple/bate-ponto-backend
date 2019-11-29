@@ -75,13 +75,13 @@ router.post("/:cod_abono/anexos", ehEmpregado,
 /**
  * Baixar anexo
  */
-router.get("/:cod_abono/anexos", ehEmpregado,
+router.get("/:cod_abono/anexos", ehAdmin,
 	checaCodAbono, async (req, res) => {
-		const { cod_usuario } = req.usuario;
 		const { cod_abono } = req.params;
+		const { cod_empresa } = req.usuario;
 		try {
 			const { anexo, anexo_original } =
-				await buscarAbono(cod_usuario, cod_abono);
+				await buscarAbono(cod_abono, cod_empresa);
 			const arquivo = downloadItem(BUCKET_ANEXOS, anexo);
 			res.setHeader('Content-disposition',
 				'attachment; filename=' + anexo_original);
