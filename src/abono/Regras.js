@@ -36,7 +36,8 @@ module.exports = {
             const abonos = (await db.query(`
                 SELECT * FROM abonos
                 WHERE cod_empregado = $1
-                AND aprovado = $2`,
+                AND aprovado = $2
+                ORDER BY data_solicitacao DESC`,
                 [
                     cod_empregado,
                     status == 'APROVADO'
@@ -46,13 +47,15 @@ module.exports = {
             const abonos = (await db.query(`
                 SELECT * FROM abonos
                 WHERE cod_empregado = $1
-                AND aprovado IS NUll`,
+                AND aprovado IS NUll
+                ORDER BY data_solicitacao DESC`,
                 [cod_empregado])).rows;
             return abonos;
         } else {
             const abonos = (await db.query(`
                 SELECT * FROM abonos
-                WHERE cod_empregado = $1`,
+                WHERE cod_empregado = $1
+                ORDER BY data_solicitacao DESC`,
                 [cod_empregado])).rows;
             return abonos;
         }
@@ -72,7 +75,8 @@ module.exports = {
                     ON e.cod_usuario = u.codigo
                     WHERE u.cod_empresa = $1
                 )
-                AND aprovado = $2`,
+                AND aprovado = $2
+                ORDER BY data_solicitacao DESC`,
                 [cod_empresa, status == 'APROVADO'])).rows;
             return abonos;
         } else if (status == 'PENDENTE') {
@@ -86,7 +90,8 @@ module.exports = {
                 ON e.cod_usuario = u.codigo
                 WHERE u.cod_empresa = $1
             )
-            AND aprovado IS NULL`,
+            AND aprovado IS NULL
+            ORDER BY data_solicitacao DESC`,
                 [cod_empresa])).rows;
             return abonos;
         } else {
@@ -99,7 +104,8 @@ module.exports = {
                 INNER JOIN usuarios u
                 ON e.cod_usuario = u.codigo
                 WHERE u.cod_empresa = $1
-            )`,
+            )
+            ORDER BY data_solicitacao DESC`,
                 [cod_empresa])).rows;
             return abonos;
         }
