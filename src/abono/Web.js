@@ -4,7 +4,7 @@
  * manipuladas as entradas e saídas das rotas.
  * 
  */
-const { uploadTo, downloadItem } = require("../config/arquivo");
+const { uploadTo, downloadItem, getDownloadUrl } = require("../config/arquivo");
 const { BUCKET_ANEXOS } = process.env;
 const router = require("express").Router();
 const { checaCodAbono } = require("./Validacoes");
@@ -82,11 +82,14 @@ router.get("/:cod_abono/anexos", ehAdmin,
 		try {
 			const { anexo, anexo_original } =
 				await buscarAbono(cod_abono, cod_empresa);
-			const arquivo = downloadItem(BUCKET_ANEXOS, anexo);
-			res.setHeader('Content-disposition',
-				'attachment; filename=' + anexo_original);
-			res.setHeader('Content-Type', 'image/jpeg');
-			return arquivo.pipe(res);
+
+			const url = await getDownloadUrl(BUCKET_ANEXOS, anexo, 3600);
+			return res.json({ url, anexo_original });
+			// const arquivo = downloadItem(BUCKET_ANEXOS, anexo);
+			// res.setHeader('Content-disposition',
+			// 	'attachment; filename=' + anexo_original);
+			// res.setHeader('Content-Type', 'image/jpeg');
+			// return arquivo.pipe(res);
 		} catch (erro) {
 			return res.status(404).json({ erro: erro.message });
 		}
