@@ -29,28 +29,58 @@ module.exports = {
         return abono;
     },
 
-    async listarAbonosEmpregado(cod_empregado) {
-        const abonos = (await db.query(`
-            SELECT * FROM abonos
-            WHERE cod_empregado = $1`,
-            [cod_empregado])).rows;
-        return abonos;
-    },
-
-    async buscarAbono(cod_empregado, cod_abono) {
-        const abono = (await db.query(`
-            SELECT * FROM abonos
-            WHERE cod_empregado = $1
-            AND codigo = $2`,
-            [cod_empregado, cod_abono])).rows[0];
-        if (!abono) {
-            throw new Error("Abono não encontrado");
+    async listarAbonosEmpregado(cod_empregado, status = '') {
+        status = status.toUpperCase();
+        if (status == 'APROVADO'
+            || status == 'REPROVADO') {
+            const abonos = (await db.query(`
+                SELECT * FROM abonos
+                WHERE cod_empregado = $1
+                AND aprovado = $2
+                ORDER BY data_solicitacao DESC`,
+                [
+                    cod_empregado,
+                    status == 'APROVADO'
+                ])).rows;
+            return abonos;
+        } else if (status == 'PENDENTE') {
+            const abonos = (await db.query(`
+                SELECT * FROM abonos
+                WHERE cod_empregado = $1
+                AND aprovado IS NUll
+                ORDER BY data_solicitacao DESC`,
+                [cod_empregado])).rows;
+            return abonos;
+        } else {
+            const abonos = (await db.query(`
+                SELECT * FROM abonos
+                WHERE cod_empregado = $1
+                ORDER BY data_solicitacao DESC`,
+                [cod_empregado])).rows;
+            return abonos;
         }
-        return abono;
     },
 
-    async listarAbonos(cod_empresa) {
-        const abonos = (await db.query(`
+    async listarAbonos(cod_empresa, status = '') {
+        status = status.toUpperCase();
+        if (status == 'APROVADO'
+            || status == 'REPROVADO') {
+            const abonos = (await db.query(`
+                SELECT a.*, u.nome FROM abonos a
+                INNER JOIN usuarios u
+                ON a.cod_empregado = u.codigo
+                WHERE a.cod_empregado IN (
+                    SELECT e.cod_usuario FROM empregados e
+                    INNER JOIN usuarios u
+                    ON e.cod_usuario = u.codigo
+                    WHERE u.cod_empresa = $1
+                )
+                AND aprovado = $2
+                ORDER BY data_solicitacao DESC`,
+                [cod_empresa, status == 'APROVADO'])).rows;
+            return abonos;
+        } else if (status == 'PENDENTE') {
+            const abonos = (await db.query(`
             SELECT a.*, u.nome FROM abonos a
             INNER JOIN usuarios u
             ON a.cod_empregado = u.codigo
@@ -59,9 +89,43 @@ module.exports = {
                 INNER JOIN usuarios u
                 ON e.cod_usuario = u.codigo
                 WHERE u.cod_empresa = $1
+            )
+            AND aprovado IS NULL
+            ORDER BY data_solicitacao DESC`,
+                [cod_empresa])).rows;
+            return abonos;
+        } else {
+            const abonos = (await db.query(`
+            SELECT a.*, u.nome FROM abonos a
+            INNER JOIN usuarios u
+            ON a.cod_empregado = u.codigo
+            WHERE a.cod_empregado IN (
+                SELECT e.cod_usuario FROM empregados e
+                INNER JOIN usuarios u
+                ON e.cod_usuario = u.codigo
+                WHERE u.cod_empresa = $1
+            )
+            ORDER BY data_solicitacao DESC`,
+                [cod_empresa])).rows;
+            return abonos;
+        }
+    },
+
+    async buscarAbono(cod_abono, cod_empresa) {
+        const abono = (await db.query(`
+            SELECT * FROM abonos
+            WHERE codigo = $1
+            AND cod_empregado IN (
+                SELECT e.cod_usuario FROM empregados e
+                INNER JOIN usuarios u
+                ON e.cod_usuario = u.codigo
+                WHERE u.cod_empresa = $2
             )`,
-            [cod_empresa])).rows;
-        return abonos;
+            [cod_abono, cod_empresa])).rows[0];
+        if (!abono) {
+            throw new Error("Abono não encontrado");
+        }
+        return abono;
     },
 
     async atualizaAbono(avaliacao, aprovado, cod_admin, cod_empresa, cod_abono) {

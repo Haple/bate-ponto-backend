@@ -4,7 +4,7 @@
  * manipuladas as entradas e saídas das rotas.
  * 
  */
-const { uploadTo, downloadItem } = require("../config/arquivo");
+const { uploadTo, downloadItem, getDownloadUrl } = require("../config/arquivo");
 const { BUCKET_ANEXOS } = process.env;
 const router = require("express").Router();
 const { checaCodAbono } = require("./Validacoes");
@@ -22,18 +22,20 @@ router.use(checaJWT);
  */
 router.get("/", async (req, res) => {
 	const { cod_usuario, cod_empresa, admin, empregado } = req.usuario;
-	const { buscarTudo } = req.query;
+	const { buscarTudo, status } = req.query;
 	try {
 		let abonos = [];
 		if (buscarTudo && admin) {
-			abonos = await listarAbonos(cod_empresa);
+			abonos = await listarAbonos(cod_empresa, status);
 		} else if (empregado) {
-			abonos = await listarAbonosEmpregado(cod_usuario);
+			abonos = await listarAbonosEmpregado(cod_usuario, status);
 		} else {
 			return res.status(400).json({ erro: "Usuário não é empregado" });
 		}
 		return res.json(abonos);
 	} catch (erro) {
+		console.log(erro);
+
 		return res.status(500).json({ erro: erro.message });
 	}
 });
@@ -73,17 +75,21 @@ router.post("/:cod_abono/anexos", ehEmpregado,
 /**
  * Baixar anexo
  */
-router.get("/:cod_abono/anexos", ehEmpregado,
+router.get("/:cod_abono/anexos", ehAdmin,
 	checaCodAbono, async (req, res) => {
-		const { cod_usuario } = req.usuario;
 		const { cod_abono } = req.params;
+		const { cod_empresa } = req.usuario;
 		try {
 			const { anexo, anexo_original } =
-				await buscarAbono(cod_usuario, cod_abono);
-			const arquivo = downloadItem(BUCKET_ANEXOS, anexo);
-			res.setHeader('Content-disposition',
-				'attachment; filename=' + anexo_original);
-			return arquivo.pipe(res);
+				await buscarAbono(cod_abono, cod_empresa);
+
+			const url = await getDownloadUrl(BUCKET_ANEXOS, anexo, 3600);
+			return res.json({ url, anexo_original });
+			// const arquivo = downloadItem(BUCKET_ANEXOS, anexo);
+			// res.setHeader('Content-disposition',
+			// 	'attachment; filename=' + anexo_original);
+			// res.setHeader('Content-Type', 'image/jpeg');
+			// return arquivo.pipe(res);
 		} catch (erro) {
 			return res.status(404).json({ erro: erro.message });
 		}
