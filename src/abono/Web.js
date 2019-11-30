@@ -85,7 +85,7 @@ router.get("/:cod_abono/anexos", ehAdmin,
 			const arquivo = downloadItem(BUCKET_ANEXOS, anexo);
 			res.setHeader('Content-disposition',
 				'attachment; filename=' + anexo_original);
-			res.setHeader('Content-Type', 'application/octet-stream');
+			res.setHeader('Content-Type', 'image/jpeg');
 			return arquivo.pipe(res);
 		} catch (erro) {
 			return res.status(404).json({ erro: erro.message });
