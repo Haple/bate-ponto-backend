@@ -7,8 +7,9 @@
 const db = require('../config/database');
 const uuid = require("uuid/v4");
 const { addDays } = require("date-fns");
-const mailer = require("nodemailer");
-const { EMAIL, EMAIL_SENHA } = process.env;
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 module.exports = {
     async solicitarConfirmacao(cod_usuario, email, nome, url) {
         const cod_confirmacao = uuid();
@@ -18,20 +19,19 @@ module.exports = {
             VALUES ($1, $2, $3)
             `,
             [cod_confirmacao, addDays(new Date(), 2), cod_usuario]);
-        const transporter = mailer.createTransport({
-            service: 'gmail',
-            auth: { user: EMAIL, pass: EMAIL_SENHA }
-        });
-        await transporter.sendMail({
-            from: '"Bate ponto" <no-reply@bateponto.com>',
-            to: email, subject: 'Confirmação de e-mail',
+
+        const msg = {
+            to: email,
+            from: 'Bate ponto <no-reply@bateponto.com>',
+            subject: 'Confirmação de e-mail',
             html: `
-                    ${nome}? É você? Se sim 
-                    <a href="${url}/confirmacoes/${cod_confirmacao}">
-                        clique aqui
-                    </a>.
-                `
-        });
+                ${nome}? É você? Se sim 
+                <a href="${url}/confirmacoes/${cod_confirmacao}">
+                    clique aqui
+                </a>.
+            `,
+        };
+        await sgMail.send(msg);
     },
     async confirmar(cod_confirmacao) {
         const confirmacao = (await db.query(`
