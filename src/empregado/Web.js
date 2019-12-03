@@ -79,7 +79,7 @@ router.put("/:cod_empregado", checaAtualizacao, async (req, res) => {
 	const { cod_empregado } = req.params;
 	const { nome, email, celular, cod_jornada } = req.body;
 	try {
-		await jornadaExiste(cod_jornada, cod_empresa);
+		await buscarJornada(cod_jornada, cod_empresa);
 		const empregado = await atualizaEmpregado(
 			cod_empregado,
 			nome,
