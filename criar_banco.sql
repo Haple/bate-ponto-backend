@@ -12,7 +12,13 @@
 -- Email: joana2019@gmail.com
 -- Senha: @Joana2019
 
-DROP TABLE IF EXISTS abonos;
+DROP TABLE IF EXISTS atrasos;
+DROP TABLE IF EXISTS relatorios;
+DROP TABLE IF EXISTS indicadores_respostas;
+DROP TABLE IF EXISTS indicadores_ativados;
+DROP TABLE IF EXISTS indicadores_resultados;
+DROP TABLE IF EXISTS indicadores;
+
 DROP TABLE IF EXISTS pontos;
 DROP TABLE IF EXISTS empregados;
 DROP TABLE IF EXISTS jornadas;
@@ -20,6 +26,8 @@ DROP TABLE IF EXISTS administradores;
 DROP TABLE IF EXISTS confirmacoes;
 DROP TABLE IF EXISTS usuarios;
 DROP TABLE IF EXISTS empresas;
+
+
 
 CREATE TABLE IF NOT EXISTS empresas(
 	codigo serial primary key,
@@ -88,6 +96,54 @@ CREATE TABLE IF NOT EXISTS abonos(
 	cod_empregado int references empregados,
 	cod_admin int references administradores
 );
+
+CREATE TABLE IF NOT EXISTS indicadores(
+	codigo serial primary key,
+	titulo varchar,
+	mesagem varchar
+);
+
+CREATE TABLE IF NOT EXISTS indicadores_ativados(
+	cod_indicador int references indicadores,
+	cod_empresa int references empresas
+);
+
+CREATE TABLE IF NOT EXISTS indicadores_resultados(
+	cod_indicador int references indicadores,
+	cod_empresa int references empresas,
+	mes int,
+	concordo int default 0 not null,
+	neutro int default 0 not null,
+	discordo int default 0 not null,
+	primary key(cod_indicador, cod_empresa, mes)
+);
+
+CREATE TABLE IF NOT EXISTS indicadores_respostas(
+	cod_indicador int references indicadores,
+	cod_empregado int references empregados,
+	mes int,
+	resposta varchar,
+	primary key(cod_indicador, cod_empregado, mes)
+);
+
+CREATE TABLE IF NOT EXISTS atrasos(
+	codigo serial primary key,
+	nome varchar,
+	email varchar,
+	horario_esperado varchar,
+	data_hora_atraso timestamp,
+	cod_empregado int references empregados,
+	cod_empresa int references empresas
+);
+
+CREATE TABLE IF NOT EXISTS relatorios(
+	codigo serial primary key,
+	periodo date,
+	estado varchar,
+	url varchar,
+	cod_empresa int references empresas
+);
+
 
 
 
@@ -174,3 +230,22 @@ DEFAULT,
 'Rua Rio Grande do Norte, 65, Jardim Nova Veneza (Nova Veneza) - Sumaré',
 2
 );
+
+INSERT INTO indicadores VALUES 
+(DEFAULT, 
+'Necessidade de hora extra',
+'Não tenho necessidade regular de realizar tarefas relacionadas ao trabalho no meu tempo livre.'),
+(DEFAULT, 
+'Horário flexível',
+'Posso ajustar meu horário de trabalho para acomodar compromissos pessoais.');
+
+INSERT INTO indicadores_ativados VALUES (1,1);
+
+INSERT INTO indicadores_resultados VALUES 
+(1,1,1,10,2,7),
+(1,1,2,9,4,6),
+(1,1,3,15,2,2),
+
+(2,1,1,10,2,7),
+(2,1,2,1,2,16),
+(2,1,3,7,2,10);

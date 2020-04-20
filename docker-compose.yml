@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    env_file: .env
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=UmaSenhaMuitoBoa
+    volumes:
+      - ./criar_banco.sql:/docker-entrypoint-initdb.d/init.sql

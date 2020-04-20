@@ -12,5 +12,8 @@ module.exports = {
             parse(final, 'HH:mm', new Date()),
             parse(inicial, 'HH:mm', new Date())
         );
+    },
+    mesAtual(){
+        return new Date().getMonth() + 1;
     }
 }

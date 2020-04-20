@@ -19,6 +19,7 @@ require("./confirmacao")(app);
 require("./jornada")(app);
 require("./empregado")(app);
 require("./ponto")(app);
+require("./indicadores")(app);
 
 app.listen(process.env.PORT || 3000, () => {
 	console.log("Servidor de pé! Vamo que vamo! ─=≡Σ((( つ＞＜)つ");

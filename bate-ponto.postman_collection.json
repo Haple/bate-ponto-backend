@@ -1,0 +1,1661 @@
+{
+	"info": {
+		"_postman_id": "4517f457-51af-4880-a620-8813d68c70cc",
+		"name": "bate-ponto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Empresa",
+			"item": [
+				{
+					"name": "Cadastrar empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cnpj\":\"16.105.965/0001-89\",\n\t\"razao_social\": \"Havan S/A\",\n\t\"cpf\":\"447.852.257-00\",\n\t\"nome\":\"Aleph S O\",\n\t\"email\":\"santosalepholiveira@gmail.com\",\n\t\"senha\": \"@Rataroeu1rainha\",\n\t\"celular\": \"(19)999898596\"\n}"
+						},
+						"url": {
+							"raw": "{{bate_ponto}}/empresas",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"empresas"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Exemplo - Cadastrar empresa",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"cnpj\":\"61.079.117/0001-05\",\n\t\"razao_social\": \"Havaianas\",\n\t\"cpf\":\"47156633848\",\n\t\"nome\":\"Aleph Santos Oliveira\",\n\t\"email\":\"santosalepholiveira2@gmail.com\",\n\t\"senha\": \"@Rataroueu1rainha\",\n\t\"celular\": \"19999898596\"\n}"
+								},
+								"url": {
+									"raw": "{{bate_ponto}}/empresas",
+									"host": [
+										"{{bate_ponto}}"
+									],
+									"path": [
+										"empresas"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "261"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"105-mJ8Z3PEY5uvfxmb7Dr+HnGgw1ws\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Oct 2019 17:35:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"empresa\": {\n        \"codigo\": 2,\n        \"cnpj\": \"24.668.695/0001-42\",\n        \"razao_social\": \"Havaianas\"\n    },\n    \"admin\": {\n        \"codigo\": 2,\n        \"cpf\": \"583.071.405-10\",\n        \"nome\": \"Aleph Santos Oliveira\",\n        \"email\": \"santosalepholiveira2@gmail.com\",\n        \"celular\": \"19999898596\",\n        \"confirmado\": false,\n        \"alertar_atraso\": false\n    }\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Empregado",
+			"item": [
+				{
+					"name": "Cadastrar empregado",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"codigo\": null,\n    \"nome\": \"Empregado1\",\n    \"cpf\": \"184.170.056-84\",\n    \"email\": \"empregado1@puccampinas.edu.br\",\n    \"senha\": \"@Empregado1\",\n    \"celular\": \"19999898596\",\n    \"banco_horas\": null,\n    \"cod_empresa\": null,\n    \"cod_jornada\": 4,\n    \"confirmado\": null,\n    \"enviar_lembrete\": null\n}"
+						},
+						"url": {
+							"raw": "{{bate_ponto}}/empregados",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"empregados"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Exemplo - Cadastrar empresa",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"cnpj\":\"61.079.117/0001-05\",\n\t\"razao_social\": \"Havaianas\",\n\t\"cpf\":\"47156633848\",\n\t\"nome\":\"Aleph Santos Oliveira\",\n\t\"email\":\"santosalepholiveira2@gmail.com\",\n\t\"senha\": \"@Rataroueu1rainha\",\n\t\"celular\": \"19999898596\"\n}"
+								},
+								"url": {
+									"raw": "{{bate_ponto}}/empresas",
+									"host": [
+										"{{bate_ponto}}"
+									],
+									"path": [
+										"empresas"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "261"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"105-mJ8Z3PEY5uvfxmb7Dr+HnGgw1ws\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Oct 2019 17:35:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"empresa\": {\n        \"codigo\": 2,\n        \"cnpj\": \"24.668.695/0001-42\",\n        \"razao_social\": \"Havaianas\"\n    },\n    \"admin\": {\n        \"codigo\": 2,\n        \"cpf\": \"583.071.405-10\",\n        \"nome\": \"Aleph Santos Oliveira\",\n        \"email\": \"santosalepholiveira2@gmail.com\",\n        \"celular\": \"19999898596\",\n        \"confirmado\": false,\n        \"alertar_atraso\": false\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Atualizar empregado",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Ruy Rodrigues Esperanto\",\n    \"email\": \"ruy2019@gmail.com\",\n    \"celular\": \"19999898596\",\n    \"cod_jornada\": 1\n}"
+						},
+						"url": {
+							"raw": "{{bate_ponto}}/empregados/3",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"empregados",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Exemplo - Cadastrar empresa",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"cnpj\":\"61.079.117/0001-05\",\n\t\"razao_social\": \"Havaianas\",\n\t\"cpf\":\"47156633848\",\n\t\"nome\":\"Aleph Santos Oliveira\",\n\t\"email\":\"santosalepholiveira2@gmail.com\",\n\t\"senha\": \"@Rataroueu1rainha\",\n\t\"celular\": \"19999898596\"\n}"
+								},
+								"url": {
+									"raw": "{{bate_ponto}}/empresas",
+									"host": [
+										"{{bate_ponto}}"
+									],
+									"path": [
+										"empresas"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "261"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"105-mJ8Z3PEY5uvfxmb7Dr+HnGgw1ws\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Oct 2019 17:35:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"empresa\": {\n        \"codigo\": 2,\n        \"cnpj\": \"24.668.695/0001-42\",\n        \"razao_social\": \"Havaianas\"\n    },\n    \"admin\": {\n        \"codigo\": 2,\n        \"cpf\": \"583.071.405-10\",\n        \"nome\": \"Aleph Santos Oliveira\",\n        \"email\": \"santosalepholiveira2@gmail.com\",\n        \"celular\": \"19999898596\",\n        \"confirmado\": false,\n        \"alertar_atraso\": false\n    }\n}"
+						},
+						{
+							"name": "Exemplo atualizar empregado",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nome\":\"Aleph Santos Oliveira\",\n\t\"email\":\"aleph.oliveira@etec.sp.gov.br\",\n\t\"celular\": \"19999898596\",\n\t\"cod_jornada\": 1\n}"
+								},
+								"url": {
+									"raw": "{{bate_ponto}}/empregados/2",
+									"host": [
+										"{{bate_ponto}}"
+									],
+									"path": [
+										"empregados",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "432"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b0-6OMnpkkxnvqYR3RQSOSmhdy7PT8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Oct 2019 23:55:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"usuario\": {\n        \"codigo\": 2,\n        \"cpf\": \"850.695.320-06\",\n        \"nome\": \"Aleph Santos Oliveira\",\n        \"email\": \"aleph.oliveira@etec.sp.gov.br\",\n        \"confirmado\": false,\n        \"celular\": \"19999898596\",\n        \"cod_empresa\": 1\n    },\n    \"empregado\": {\n        \"banco_horas\": 0,\n        \"enviar_lembrete\": false,\n        \"cod_jornada\": 1,\n        \"cod_usuario\": 2\n    },\n    \"jornada\": {\n        \"codigo\": 1,\n        \"cod_empresa\": 1,\n        \"nome\": \"Jornada padrão 2\",\n        \"entrada1\": \"08:00:00\",\n        \"saida1\": \"12:00:00\",\n        \"entrada2\": \"13:00:00\",\n        \"saida2\": \"17:00:00\",\n        \"carga_diaria\": 480\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Buscar empregado",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{bate_ponto}}/empregados/12",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"empregados",
+								"12"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Exemplo - Cadastrar empresa",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"cnpj\":\"61.079.117/0001-05\",\n\t\"razao_social\": \"Havaianas\",\n\t\"cpf\":\"47156633848\",\n\t\"nome\":\"Aleph Santos Oliveira\",\n\t\"email\":\"santosalepholiveira2@gmail.com\",\n\t\"senha\": \"@Rataroueu1rainha\",\n\t\"celular\": \"19999898596\"\n}"
+								},
+								"url": {
+									"raw": "{{bate_ponto}}/empresas",
+									"host": [
+										"{{bate_ponto}}"
+									],
+									"path": [
+										"empresas"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "261"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"105-mJ8Z3PEY5uvfxmb7Dr+HnGgw1ws\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Oct 2019 17:35:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"empresa\": {\n        \"codigo\": 2,\n        \"cnpj\": \"24.668.695/0001-42\",\n        \"razao_social\": \"Havaianas\"\n    },\n    \"admin\": {\n        \"codigo\": 2,\n        \"cpf\": \"583.071.405-10\",\n        \"nome\": \"Aleph Santos Oliveira\",\n        \"email\": \"santosalepholiveira2@gmail.com\",\n        \"celular\": \"19999898596\",\n        \"confirmado\": false,\n        \"alertar_atraso\": false\n    }\n}"
+						},
+						{
+							"name": "Exemplo atualizar empregado",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nome\":\"Aleph Santos Oliveira\",\n\t\"email\":\"aleph.oliveira@etec.sp.gov.br\",\n\t\"celular\": \"19999898596\",\n\t\"cod_jornada\": 1\n}"
+								},
+								"url": {
+									"raw": "{{bate_ponto}}/empregados/2",
+									"host": [
+										"{{bate_ponto}}"
+									],
+									"path": [
+										"empregados",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "432"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b0-6OMnpkkxnvqYR3RQSOSmhdy7PT8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Oct 2019 23:55:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"usuario\": {\n        \"codigo\": 2,\n        \"cpf\": \"850.695.320-06\",\n        \"nome\": \"Aleph Santos Oliveira\",\n        \"email\": \"aleph.oliveira@etec.sp.gov.br\",\n        \"confirmado\": false,\n        \"celular\": \"19999898596\",\n        \"cod_empresa\": 1\n    },\n    \"empregado\": {\n        \"banco_horas\": 0,\n        \"enviar_lembrete\": false,\n        \"cod_jornada\": 1,\n        \"cod_usuario\": 2\n    },\n    \"jornada\": {\n        \"codigo\": 1,\n        \"cod_empresa\": 1,\n        \"nome\": \"Jornada padrão 2\",\n        \"entrada1\": \"08:00:00\",\n        \"saida1\": \"12:00:00\",\n        \"entrada2\": \"13:00:00\",\n        \"saida2\": \"17:00:00\",\n        \"carga_diaria\": 480\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Deletar empregado",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{bate_ponto}}/empregados/12",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"empregados",
+								"12"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Exemplo - Cadastrar empresa",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"cnpj\":\"61.079.117/0001-05\",\n\t\"razao_social\": \"Havaianas\",\n\t\"cpf\":\"47156633848\",\n\t\"nome\":\"Aleph Santos Oliveira\",\n\t\"email\":\"santosalepholiveira2@gmail.com\",\n\t\"senha\": \"@Rataroueu1rainha\",\n\t\"celular\": \"19999898596\"\n}"
+								},
+								"url": {
+									"raw": "{{bate_ponto}}/empresas",
+									"host": [
+										"{{bate_ponto}}"
+									],
+									"path": [
+										"empresas"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "261"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"105-mJ8Z3PEY5uvfxmb7Dr+HnGgw1ws\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Oct 2019 17:35:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"empresa\": {\n        \"codigo\": 2,\n        \"cnpj\": \"24.668.695/0001-42\",\n        \"razao_social\": \"Havaianas\"\n    },\n    \"admin\": {\n        \"codigo\": 2,\n        \"cpf\": \"583.071.405-10\",\n        \"nome\": \"Aleph Santos Oliveira\",\n        \"email\": \"santosalepholiveira2@gmail.com\",\n        \"celular\": \"19999898596\",\n        \"confirmado\": false,\n        \"alertar_atraso\": false\n    }\n}"
+						},
+						{
+							"name": "Exemplo atualizar empregado",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nome\":\"Aleph Santos Oliveira\",\n\t\"email\":\"aleph.oliveira@etec.sp.gov.br\",\n\t\"celular\": \"19999898596\",\n\t\"cod_jornada\": 1\n}"
+								},
+								"url": {
+									"raw": "{{bate_ponto}}/empregados/2",
+									"host": [
+										"{{bate_ponto}}"
+									],
+									"path": [
+										"empregados",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "432"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b0-6OMnpkkxnvqYR3RQSOSmhdy7PT8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Oct 2019 23:55:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"usuario\": {\n        \"codigo\": 2,\n        \"cpf\": \"850.695.320-06\",\n        \"nome\": \"Aleph Santos Oliveira\",\n        \"email\": \"aleph.oliveira@etec.sp.gov.br\",\n        \"confirmado\": false,\n        \"celular\": \"19999898596\",\n        \"cod_empresa\": 1\n    },\n    \"empregado\": {\n        \"banco_horas\": 0,\n        \"enviar_lembrete\": false,\n        \"cod_jornada\": 1,\n        \"cod_usuario\": 2\n    },\n    \"jornada\": {\n        \"codigo\": 1,\n        \"cod_empresa\": 1,\n        \"nome\": \"Jornada padrão 2\",\n        \"entrada1\": \"08:00:00\",\n        \"saida1\": \"12:00:00\",\n        \"entrada2\": \"13:00:00\",\n        \"saida2\": \"17:00:00\",\n        \"carga_diaria\": 480\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Buscar empregados",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"url": {
+							"raw": "{{bate_ponto}}/empregados?nome&cod_jornada",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"empregados"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": null
+								},
+								{
+									"key": "cod_jornada",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Exemplo busca empregados",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{bate_ponto}}/empregados?",
+									"host": [
+										"{{bate_ponto}}"
+									],
+									"path": [
+										"empregados"
+									],
+									"query": [
+										{
+											"key": null,
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "229"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e5-xOTV/OEOaZCTSOF3qooiBO/TVaE\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2019 20:54:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"banco_horas\": 0,\n        \"enviar_lembrete\": false,\n        \"cod_jornada\": 1,\n        \"cod_usuario\": 7,\n        \"codigo\": 7,\n        \"cpf\": \"850.695.320-06\",\n        \"nome\": \"Empregado 1\",\n        \"email\": \"aleph.oliveira@etec.sp.gov.br\",\n        \"confirmado\": false,\n        \"celular\": \"19999898596\",\n        \"cod_empresa\": 1\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Buscar pontos do empregado",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{bate_ponto}}/empregados/7/pontos",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"empregados",
+								"7",
+								"pontos"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Sessão",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "09a51827-32d8-442b-aa04-b0f9cb330d6f",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.globals.set(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"email\": \"santosalepholiveira@gmail.com\", \"senha\": \"@Rataroeu1rainha\" }"
+						},
+						"url": {
+							"raw": "{{bate_ponto}}/sessoes",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"sessoes"
+							]
+						},
+						"description": "EMPREGADO\n{\n    \"email\": \"renata2019@gmail.com\",\n    \"senha\": \"@Renata2019\"\n}\n\nEMPREGADO\n{\n    \"email\": \"joana2019@gmail.com\",\n    \"senha\": \"@Joana2019\"\n}\n\nADMIN\n{\n    \"email\": \"santosalepholiveira@gmail.com\",\n    \"senha\": \"@Rataroeu1rainha\"\n}"
+					},
+					"response": [
+						{
+							"name": "Exemplo - Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"santosalepholiveira@gmail.com\",\n    \"senha\": \"@Rataroueu1rainha\"\n}"
+								},
+								"url": {
+									"raw": "{{bate_ponto}}/sessoes",
+									"host": [
+										"{{bate_ponto}}"
+									],
+									"path": [
+										"sessoes"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "396"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"18c-yOsm3veW7q+CRvJnM7pIRo9US7I\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Oct 2019 17:35:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RpZ28iOjEsImNwZiI6IjQ3MTU2NjMzODQ4Iiwibm9tZSI6IkFsZXBoIFNhbnRvcyBPbGl2ZWlyYSIsImVtYWlsIjoic2FudG9zYWxlcGhvbGl2ZWlyYUBnbWFpbC5jb20iLCJjb25maXJtYWRvIjpmYWxzZSwiY2VsdWxhciI6IjE5OTk5ODk4NTk2IiwiY29kX2VtcHJlc2EiOjEsImFkbWluIjp0cnVlLCJlbXByZWdhZG8iOmZhbHNlLCJpYXQiOjE1NzE5Mzg1NTksImV4cCI6MTU3MjAyNDk1OX0.N0WEp2n_Kh9McPZuFMCktKKDgrSBCA9YPB4kQPc8Q0g\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Abono",
+			"item": [
+				{
+					"name": "Criar abono",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"data_abonada\":\"08/10/2019\", \n\t\"motivo\":\"Dengue\" \n}"
+						},
+						"url": {
+							"raw": "{{bate_ponto}}/abonos",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"abonos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Exemplo Criar abono",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \n\t\"data_abonada\":\"01/10/2019\", \n\t\"motivo\":\"Não trabalhei dnv\" \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{bate_ponto}}/abonos",
+									"host": [
+										"{{bate_ponto}}"
+									],
+									"path": [
+										"abonos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "243"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f3-/CwxH7aUqERS+RS7kZ3p6Jn85tU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Nov 2019 16:42:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"abono\": {\n        \"codigo\": 1,\n        \"motivo\": \"Não trabalhei dnv\",\n        \"anexo\": null,\n        \"anexo_original\": null,\n        \"data_solicitacao\": \"2019-11-20T13:42:32.217Z\",\n        \"data_abonada\": \"2019-10-01T03:00:00.000Z\",\n        \"aprovado\": null,\n        \"avaliacao\": null,\n        \"cod_empregado\": 2,\n        \"cod_admin\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Enviar anexo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "anexo",
+									"type": "file",
+									"src": "/home/aleph/Downloads/avatar.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://bate-ponto.requestcatcher.com/abonos/5/anexos",
+							"protocol": "https",
+							"host": [
+								"bate-ponto",
+								"requestcatcher",
+								"com"
+							],
+							"path": [
+								"abonos",
+								"5",
+								"anexos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Exemplo Enviar anexo",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "anexo",
+											"type": "file",
+											"src": "/home/aleph/Downloads/avatar.jpeg"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{bate_ponto}}/abonos/1/anexos",
+									"host": [
+										"{{bate_ponto}}"
+									],
+									"path": [
+										"abonos",
+										"1",
+										"anexos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "277"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"115-qQE9KV33TWRf2TybcU3Lc9h/iyU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Nov 2019 16:42:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"codigo\": 1,\n    \"motivo\": \"Não trabalhei dnv\",\n    \"anexo\": \"86174c0da9b938dd6f9b9e2563c7a405.jpeg\",\n    \"anexo_original\": \"avatar.jpeg\",\n    \"data_solicitacao\": \"2019-11-20T13:42:32.217Z\",\n    \"data_abonada\": \"2019-10-01T03:00:00.000Z\",\n    \"aprovado\": null,\n    \"avaliacao\": null,\n    \"cod_empregado\": 2,\n    \"cod_admin\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Avaliar abono",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"aprovado\":true, \n\t\"avaliacao\":\"OK\" \n}"
+						},
+						"url": {
+							"raw": "{{bate_ponto}}/abonos/3/avaliacoes",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"abonos",
+								"3",
+								"avaliacoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download anexo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{bate_ponto}}/abonos/44/anexos",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"abonos",
+								"44",
+								"anexos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar abonos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{bate_ponto}}/abonos?buscarTudo=true&status=pendente",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"abonos"
+							],
+							"query": [
+								{
+									"key": "buscarTudo",
+									"value": "true"
+								},
+								{
+									"key": "status",
+									"value": "pendente"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Confirmação",
+			"item": [
+				{
+					"name": "Confirmar e-mail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/confirmacoes/4d5ca90c-c36b-405c-93c4-b9157ef58a87",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"confirmacoes",
+								"4d5ca90c-c36b-405c-93c4-b9157ef58a87"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Jornada",
+			"item": [
+				{
+					"name": "Criar jornada",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nome\":\"Jornada padrão\",\n    \"entrada1\": \"08:00\",\n    \"saida1\": \"12:00\",\n    \"entrada2\": \"13:00\",\n    \"saida2\": \"17:00\"\n}"
+						},
+						"url": {
+							"raw": "{{bate_ponto}}/jornadas",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"jornadas"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Exemplo criar jornada",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RpZ28iOjEsImNwZiI6IjQ3MTU2NjMzODQ4Iiwibm9tZSI6IkFsZXBoIFNhbnRvcyBPbGl2ZWlyYSIsImVtYWlsIjoic2FudG9zYWxlcGhvbGl2ZWlyYUBnbWFpbC5jb20iLCJjb25maXJtYWRvIjpmYWxzZSwiY2VsdWxhciI6IjE5OTk5ODk4NTk2IiwiY29kX2VtcHJlc2EiOjEsImFkbWluIjpmYWxzZSwiZW1wcmVnYWRvIjp0cnVlLCJpYXQiOjE1NzE4OTQ1NjYsImV4cCI6MTU3MTk4MDk2Nn0.IFWTtuL7nGPhWsF76_a1AOCRXcDT3zzvMe813faODhE",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nome\":\"Jornada padrão 3\",\n    \"entrada1\": \"08:00\",\n    \"saida1\": \"12:00\",\n    \"entrada2\": \"13:00\",\n    \"saida2\": \"17:00\"\n}"
+								},
+								"url": {
+									"raw": "{{bate_ponto}}/jornadas",
+									"host": [
+										"{{bate_ponto}}"
+									],
+									"path": [
+										"jornadas"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "158"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9e-QQMoxdPxgf0b0+4iQtkJq144Bc4\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2019 20:56:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"codigo\": 3,\n    \"cod_empresa\": 1,\n    \"nome\": \"Jornada padrão 3\",\n    \"entrada1\": \"08:00:00\",\n    \"saida1\": \"12:00:00\",\n    \"entrada2\": \"13:00:00\",\n    \"saida2\": \"17:00:00\",\n    \"carga_diaria\": 480\n}"
+						}
+					]
+				},
+				{
+					"name": "Buscar jornadas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{bate_ponto}}/jornadas",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"jornadas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar jornada",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{bate_ponto}}/jornadas/2",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"jornadas",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Ponto",
+			"item": [
+				{
+					"name": "Bater ponto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"latitude\":\"43.19203\",\n\t\"longitude\":\"-22.19283\",\n\t\"localizacao\":\"Rua bla\"\n}"
+						},
+						"url": {
+							"raw": "{{bate_ponto}}/pontos",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"pontos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar pontos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{bate_ponto}}/pontos",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"pontos"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Indicadores",
+			"item": [
+				{
+					"name": "Buscar indicadores",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{bate_ponto}}/indicadores/resultados",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"indicadores",
+								"resultados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Habilitar/desabilitar indicador",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ativado\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{bate_ponto}}/indicadores/2",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"indicadores",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Responder indicador",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"resposta\": \"DISCORDO\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{bate_ponto}}/indicadores/1/respostas",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"indicadores",
+								"1",
+								"respostas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar indicadores para responder",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{bate_ponto}}/indicadores",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"indicadores"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
