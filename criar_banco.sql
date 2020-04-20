@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS indicadores_ativados;
 DROP TABLE IF EXISTS indicadores_resultados;
 DROP TABLE IF EXISTS indicadores;
 
+DROP TABLE IF EXISTS abonos;
 DROP TABLE IF EXISTS pontos;
 DROP TABLE IF EXISTS empregados;
 DROP TABLE IF EXISTS jornadas;
