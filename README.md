@@ -51,7 +51,7 @@ para confirmar que a aplicação está de pé.
 	- [X] Bater ponto (Daniel)
 	- [X] Listar pontos (Gabriel)
 	- [X] Pedir abono (Daniel)
-	- [ ] (Opcional) Lembrete de ponto
+	- [ ] Lembrete de ponto
 	
 - [ ] Web
 	- [X] Cadastro empresa (Aleph)
@@ -60,9 +60,14 @@ para confirmar que a aplicação está de pé.
 	- [X] Avaliar abono (Gabriel)
 	- [X] Cadastrar empregado (Aleph)
 	- [X] Listar empregados (Aleph)
-	- [ ] (Opcional) Relatório de pontos
-	- [ ] (Opcional) Enviar relatório automático
-	- [ ] (Opcional) Alerta de atrasos
+
+	- [X] Buscar indicadores
+	- [X] Configurar habilitar/desabilitar indicador
+	- [X] Responder indicador
+	- [X] Buscar indicadores restantes para responder
+	- [ ] Relatório de pontos
+	- [ ] Enviar relatório automático
+	- [ ] Alerta de atrasos
 
 # Módulos e rotas
 ```
