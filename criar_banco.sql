@@ -112,19 +112,19 @@ CREATE TABLE IF NOT EXISTS indicadores_ativados(
 CREATE TABLE IF NOT EXISTS indicadores_resultados(
 	cod_indicador int references indicadores,
 	cod_empresa int references empresas,
-	mes int,
+	periodo date,
 	concordo int default 0 not null,
 	neutro int default 0 not null,
 	discordo int default 0 not null,
-	primary key(cod_indicador, cod_empresa, mes)
+	primary key(cod_indicador, cod_empresa, periodo)
 );
 
 CREATE TABLE IF NOT EXISTS indicadores_respostas(
 	cod_indicador int references indicadores,
 	cod_empregado int references empregados,
-	mes int,
+	periodo date,
 	resposta varchar,
-	primary key(cod_indicador, cod_empregado, mes)
+	primary key(cod_indicador, cod_empregado, periodo)
 );
 
 CREATE TABLE IF NOT EXISTS atrasos(
@@ -243,10 +243,22 @@ INSERT INTO indicadores VALUES
 INSERT INTO indicadores_ativados VALUES (1,1);
 
 INSERT INTO indicadores_resultados VALUES 
-(1,1,1,10,2,7),
-(1,1,2,9,4,6),
-(1,1,3,15,2,2),
+(1,1,'2019-01-01',10,2,7),
+(1,1,'2019-02-01',9,4,6),
+(1,1,'2019-03-01',15,2,2),
+(1,1,'2019-04-01',10,2,7),
+(1,1,'2019-05-01',9,4,6),
+(1,1,'2019-06-01',15,2,2),
+(1,1,'2019-07-01',10,2,7),
+(1,1,'2019-08-01',9,4,6),
+(1,1,'2019-09-01',15,2,2),
+(1,1,'2019-10-01',10,2,7),
+(1,1,'2019-11-01',9,4,6),
+(1,1,'2019-12-01',15,2,2),
+(1,1,'2020-01-01',10,2,7),
+(1,1,'2020-02-01',9,4,6),
+(1,1,'2020-03-01',15,2,2),
 
-(2,1,1,10,2,7),
-(2,1,2,1,2,16),
-(2,1,3,7,2,10);
+(2,1,'2020-01-01',10,2,7),
+(2,1,'2020-02-01',1,2,16),
+(2,1,'2020-03-01',7,2,10);
