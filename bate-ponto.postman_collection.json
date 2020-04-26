@@ -1278,7 +1278,7 @@
 				{
 					"name": "Confirmar e-mail",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"url": {
 							"raw": "{{base_url}}/confirmacoes/4d5ca90c-c36b-405c-93c4-b9157ef58a87",
@@ -1576,7 +1576,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"ativado\": true\n}",
+							"raw": "{\n\t\"ativado\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1609,7 +1609,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"resposta\": \"DISCORDO\"\n}",
+							"raw": "{\n\t\"resposta\": \"NEUTRO\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1632,6 +1632,18 @@
 				},
 				{
 					"name": "Buscar indicadores para responder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e595f993-1600-4f0e-a04a-ed7aa8e15475",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -1648,6 +1660,98 @@
 							],
 							"path": [
 								"indicadores"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Buscar indicadores para responder",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{bate_ponto}}/indicadores",
+									"host": [
+										"{{bate_ponto}}"
+									],
+									"path": [
+										"indicadores"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "193"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c1-QKJqTU9H5kJRQ34IrT5eYzLC1YM\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 May 2020 02:41:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"codigo\": 1,\n        \"titulo\": \"Necessidade de hora extra\",\n        \"mesagem\": \"Não tenho necessidade regular de realizar tarefas relacionadas ao trabalho no meu tempo livre.\",\n        \"cod_indicador\": 1,\n        \"cod_empresa\": 1\n    }\n]"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Atrasos",
+			"item": [
+				{
+					"name": "Buscar atrasos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{bate_ponto}}/atrasos",
+							"host": [
+								"{{bate_ponto}}"
+							],
+							"path": [
+								"atrasos"
 							]
 						}
 					},

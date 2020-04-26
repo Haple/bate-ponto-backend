@@ -8,7 +8,7 @@ const router = require("express").Router();
 const { checaCodIndicador } = require("./Validacoes");
 const { buscaIndicadores, configurarIndicador, responderIndicador } = require("./Regras");
 const { buscaIndicadoresRestantes } = require("./Regras");
-const { checaJWT, ehAdmin, ehEmpregado } = require("../sessao/Validacoes");
+const { checaJWT, ehAdmin, ehEmpregado } = require("../sessoes/Validacoes");
 
 router.use(checaJWT);
 

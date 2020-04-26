@@ -8,11 +8,11 @@ const router = require("express").Router();
 const { checaCadastro, checaAtualizacao, checaCodEmpregado } = require("./Validacoes");
 const { criarEmpregado, cadastroJaExistente, buscaEmpregado } = require("./Regras");
 const { atualizaEmpregado, buscaEmpregados, deletarEmpregado } = require("./Regras");
-const { buscarJornada } = require("../jornada/Regras");
-const { buscarPontos } = require("../ponto/Regras");
-const { solicitarConfirmacao } = require("../confirmacao/Regras");
-const { criarUsuario } = require("../empresa/Regras");
-const { checaJWT, ehAdmin } = require("../sessao/Validacoes");
+const { buscarJornada } = require("../jornadas/Regras");
+const { buscarPontos } = require("../pontos/Regras");
+const { solicitarConfirmacao } = require("../confirmacoes/Regras");
+const { criarUsuario } = require("../empresas/Regras");
+const { checaJWT, ehAdmin } = require("../sessoes/Validacoes");
 
 router.use(checaJWT);
 router.use(ehAdmin);

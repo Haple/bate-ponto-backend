@@ -7,10 +7,10 @@
 const router = require("express").Router();
 const cron = require('node-cron');
 const { toDate } = require("date-fns");
-const { checaJWT, ehEmpregado } = require("../sessao/Validacoes");
+const { checaJWT, ehEmpregado } = require("../sessoes/Validacoes");
 const { checaPonto } = require("./Validacoes");
-const { buscarJornada } = require("../jornada/Regras");
-const { salvarPonto, buscarEmpregados, } = require("./Regras");
+const { buscarJornada } = require("../jornadas/Regras");
+const { salvarPonto, buscarEmpregados, checaAtraso } = require("./Regras");
 const { buscarPontosDeOntem, atualizaBancoDeHoras } = require("./Regras");
 const { calculaSaldo, buscarPontos } = require("./Regras");
 
@@ -21,9 +21,10 @@ router.use(ehEmpregado);
  * Bater ponto
  */
 router.post("/", checaPonto, async (req, res) => {
-	const { codigo } = req.usuario;
+	const { codigo: cod_empregado, nome, email, cod_jornada, cod_empresa } = req.usuario;
 	const { latitude, longitude, localizacao } = req.body;
-	const ponto = await salvarPonto(latitude, longitude, localizacao, codigo);
+	await checaAtraso(nome, email, cod_jornada, cod_empregado, cod_empresa);
+	const ponto = await salvarPonto(latitude, longitude, localizacao, cod_empregado);
 	return res.json(ponto);
 });
 

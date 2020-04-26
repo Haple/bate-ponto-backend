@@ -12,14 +12,15 @@ app.get('/', (req, res) => {
 	res.json({ status: 'Tô de pé' });
 });
 
-require('./empresa')(app);
-require('./sessao')(app);
-require('./abono')(app);
-require("./confirmacao")(app);
-require("./jornada")(app);
-require("./empregado")(app);
-require("./ponto")(app);
+require('./empresas')(app);
+require('./sessoes')(app);
+require('./abonos')(app);
+require("./confirmacoes")(app);
+require("./jornadas")(app);
+require("./empregados")(app);
+require("./pontos")(app);
 require("./indicadores")(app);
+require("./atrasos")(app);
 
 app.listen(process.env.PORT || 3000, () => {
 	console.log("Servidor de pé! Vamo que vamo! ─=≡Σ((( つ＞＜)つ");

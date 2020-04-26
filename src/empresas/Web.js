@@ -7,7 +7,7 @@
 const router = require("express").Router();
 const { checaCadastro } = require("./Validacoes");
 const { criarEmpresa, criarUsuario, criarAdmin, cadastroJaExistente } = require("./Regras");
-const { solicitarConfirmacao } = require("../confirmacao/Regras");
+const { solicitarConfirmacao } = require("../confirmacoes/Regras");
 
 /**
  * Criar empresa

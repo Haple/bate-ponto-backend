@@ -65,9 +65,7 @@ para confirmar que a aplicação está de pé.
 	- [X] Configurar habilitar/desabilitar indicador
 	- [X] Responder indicador
 	- [X] Buscar indicadores restantes para responder
-	- [ ] Relatório de pontos
-	- [ ] Enviar relatório automático
-	- [ ] Alerta de atrasos
+	- [X] Atrasos
 
 # Módulos e rotas
 ```

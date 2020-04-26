@@ -13,7 +13,6 @@
 -- Senha: @Joana2019
 
 DROP TABLE IF EXISTS atrasos;
-DROP TABLE IF EXISTS relatorios;
 DROP TABLE IF EXISTS indicadores_respostas;
 DROP TABLE IF EXISTS indicadores_ativados;
 DROP TABLE IF EXISTS indicadores_resultados;
@@ -137,15 +136,6 @@ CREATE TABLE IF NOT EXISTS atrasos(
 	cod_empresa int references empresas
 );
 
-CREATE TABLE IF NOT EXISTS relatorios(
-	codigo serial primary key,
-	periodo date,
-	estado varchar,
-	url varchar,
-	cod_empresa int references empresas
-);
-
-
 
 
 INSERT INTO empresas VALUES (DEFAULT,'61079117000105','Havaianas');
@@ -262,3 +252,14 @@ INSERT INTO indicadores_resultados VALUES
 (2,1,'2020-01-01',10,2,7),
 (2,1,'2020-02-01',1,2,16),
 (2,1,'2020-03-01',7,2,10);
+
+
+INSERT INTO atrasos (
+	DEFAULT,
+	'Renata Diniz Almeida',	
+	'renata2019@gmail.com',
+	'08:00:00',
+	'2019-12-02T07:00:00.000000',
+	2,
+	1
+);

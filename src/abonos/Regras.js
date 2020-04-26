@@ -5,9 +5,9 @@
  * 
  */
 const db = require('../config/database');
-const { buscaEmpregado } = require("../empregado/Regras");
-const { buscarJornada } = require("../jornada/Regras");
-const { atualizaBancoDeHoras } = require('../ponto/Regras')
+const { buscaEmpregado } = require("../empregados/Regras");
+const { buscarJornada } = require("../jornadas/Regras");
+const { atualizaBancoDeHoras } = require('../pontos/Regras')
 
 module.exports = {
     async criarAbono(motivo, data_abonada, cod_empregado) {

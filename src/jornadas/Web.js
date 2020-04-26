@@ -5,7 +5,7 @@
  * 
  */
 const router = require("express").Router();
-const { checaJWT, ehAdmin } = require("../sessao/Validacoes");
+const { checaJWT, ehAdmin } = require("../sessoes/Validacoes");
 const { checaCadastro, checaExclusao } = require("./Validacoes");
 const { jornadaJaExistente, criarJornada } = require("./Regras");
 const { buscarJornadas, deletarJornada } = require("./Regras");
