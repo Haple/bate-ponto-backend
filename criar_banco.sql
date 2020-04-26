@@ -259,7 +259,7 @@ INSERT INTO atrasos values (
 	'Renata Diniz Almeida',	
 	'renata2019@gmail.com',
 	'08:00:00',
-	'2019-12-02T07:00:00.000000',
+	'2019-12-02T09:45:00.000000',
 	2,
 	1
 );
