@@ -254,7 +254,7 @@ INSERT INTO indicadores_resultados VALUES
 (2,1,'2020-03-01',7,2,10);
 
 
-INSERT INTO atrasos (
+INSERT INTO atrasos values (
 	DEFAULT,
 	'Renata Diniz Almeida',	
 	'renata2019@gmail.com',
