@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS abonos(
 CREATE TABLE IF NOT EXISTS indicadores(
 	codigo serial primary key,
 	titulo varchar,
-	mesagem varchar
+	mensagem varchar
 );
 
 CREATE TABLE IF NOT EXISTS indicadores_ativados(
