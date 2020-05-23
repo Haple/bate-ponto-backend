@@ -228,7 +228,26 @@ INSERT INTO indicadores VALUES
 'Não tenho necessidade regular de realizar tarefas relacionadas ao trabalho no meu tempo livre.'),
 (DEFAULT, 
 'Horário flexível',
-'Posso ajustar meu horário de trabalho para acomodar compromissos pessoais.');
+'Posso ajustar meu horário de trabalho para acomodar compromissos pessoais.'),
+(DEFAULT, 
+'Desenvolvimento pessoal',
+'A empresa proporciona oportunidades de desenvolvimento pessoal.'),
+(DEFAULT, 
+'Treinamento',
+'Tenho acesso ao treinamento necessário para ser produtivo na minha posição atual.'),
+(DEFAULT, 
+'Plano de carreira',
+'Está claro o que devo fazer para evoluir com minha carreira dentro da empresa.'),
+(DEFAULT, 
+'Carga de trabalho',
+'Minha carga de trabalho é administrável.'),
+(DEFAULT, 
+'Dedicação e satisfação',
+'O meu trabalho é desafiador e me sinto inspirado a sempre fazer o meu melhor.'),
+(DEFAULT, 
+'Absorção e distração',
+'O tempo voa quando estou no trabalho e esqueço de tudo ao meu redor.')
+;
 
 INSERT INTO indicadores_ativados VALUES (1,1);
 
@@ -251,7 +270,31 @@ INSERT INTO indicadores_resultados VALUES
 
 (2,1,'2020-01-01',10,2,7),
 (2,1,'2020-02-01',1,2,16),
-(2,1,'2020-03-01',7,2,10);
+(2,1,'2020-03-01',7,2,10),
+
+(3,1,'2020-01-01',10,2,7),
+(3,1,'2020-02-01',1,2,16),
+(3,1,'2020-03-01',7,2,10),
+
+(4,1,'2020-01-01',10,2,7),
+(4,1,'2020-02-01',1,2,16),
+(4,1,'2020-03-01',7,2,10),
+
+(5,1,'2020-01-01',10,2,7),
+(5,1,'2020-02-01',1,2,16),
+(5,1,'2020-03-01',7,2,10),
+
+(6,1,'2020-01-01',10,2,7),
+(6,1,'2020-02-01',1,2,16),
+(6,1,'2020-03-01',7,2,10),
+
+(7,1,'2020-01-01',10,2,7),
+(7,1,'2020-02-01',1,2,16),
+(7,1,'2020-03-01',7,2,10),
+
+(8,1,'2020-01-01',10,2,7),
+(8,1,'2020-02-01',1,2,16),
+(8,1,'2020-03-01',7,2,10);
 
 
 INSERT INTO atrasos values (
