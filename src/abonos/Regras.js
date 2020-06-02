@@ -18,7 +18,7 @@ module.exports = {
             [cod_empregado, data_abonada])).rows[0];
 
         if (abonoJaExiste)
-            throw new Error("Abono já solicitado");
+            throw new Error("Abono já solicitado!");
 
         const abono = (await db.query(`
             INSERT INTO abonos 
@@ -123,7 +123,7 @@ module.exports = {
             )`,
             [cod_abono, cod_empresa])).rows[0];
         if (!abono) {
-            throw new Error("Abono não encontrado");
+            throw new Error("Abono não encontrado!");
         }
         return abono;
     },
@@ -144,7 +144,7 @@ module.exports = {
             RETURNING *`,
             [avaliacao, aprovado, cod_admin, cod_abono, cod_empresa])).rows[0];
         if (!abono)
-            throw new Error("Abono não encontrado");
+            throw new Error("Abono não encontrado!");
         return { ...abono };
     },
 
@@ -165,7 +165,7 @@ module.exports = {
             RETURNING *`,
             [anexo, anexo_original, cod_abono, cod_empregado])).rows[0];
         if (!abono) {
-            throw new Error("Abono não encontrado")
+            throw new Error("Abono não encontrado!")
         }
         return abono;
     },

@@ -30,7 +30,7 @@ router.get("/", async (req, res) => {
 		} else if (empregado) {
 			abonos = await listarAbonosEmpregado(cod_usuario, status);
 		} else {
-			return res.status(400).json({ erro: "Usuário não é empregado" });
+			return res.status(400).json({ erro: "Usuário não é colaborador!" });
 		}
 		return res.json(abonos);
 	} catch (erro) {
