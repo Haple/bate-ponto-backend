@@ -12,7 +12,7 @@ module.exports = {
             SELECT * FROM usuarios
             WHERE cpf = $1
         `, [cpf])).rows[0];
-        if (cpfExistente) throw new Error("CPF já cadastrado");
+        if (cpfExistente) throw new Error("CPF já cadastrado!");
         await emailJaExiste(email);
     },
 
@@ -37,7 +37,7 @@ module.exports = {
             RETURNING *
             `,
             [cod_jornada, cod_empregado])).rows[0];
-        if (!empregado) throw new Error("Empregado não encontrado");
+        if (!empregado) throw new Error("Colaborador não encontrado!");
         if (empregado.email != email) {
             await emailJaExiste(email);
         }
@@ -63,7 +63,7 @@ module.exports = {
             AND u.codigo = $2
             `,
             [cod_empresa, cod_empregado])).rows[0];
-        if (!empregado) throw new Error("Empregado não encontrado");
+        if (!empregado) throw new Error("Colaborador não encontrado!");
         delete empregado.senha;
         return empregado;
     },
@@ -93,7 +93,7 @@ module.exports = {
         await deletarPontos(cod_empresa, cod_empregado);
         await deletarAbonos(cod_empresa, cod_empregado);
         const deletado = await deletarEmpregado(cod_empresa, cod_empregado);
-        if (!deletado) throw new Error("Empregado não encontrado");
+        if (!deletado) throw new Error("Colaborador não encontrado!");
         const admin = await ehAdmin(cod_empresa, cod_empregado);
         if (!admin) {
             await deletarConfirmacoes(cod_empresa, cod_empregado);
@@ -110,7 +110,7 @@ async function emailJaExiste(email) {
             WHERE email = $1
         `, [email])).rows[0];
     if (emailExistente)
-        throw new Error("E-mail já cadastrado");
+        throw new Error("E-mail já cadastrado!");
 }
 
 async function deletarUsuario(cod_empresa, cod_empregado) {

@@ -61,9 +61,9 @@ module.exports = {
             AND cod_empresa = $2
             `, [cod_indicador, cod_empresa])).rows[0];
 
-        if (indicador_ativado && ativado) throw new Error("Indicador já está ativado");
+        if (indicador_ativado && ativado) throw new Error("Indicador já está ativado!");
 
-        if (!indicador_ativado && !ativado) throw new Error("Indicador já está desativado");
+        if (!indicador_ativado && !ativado) throw new Error("Indicador já está desativado!");
 
         if (ativado) {
             await db.query(`
@@ -83,7 +83,7 @@ module.exports = {
     async responderIndicador(cod_empresa, cod_indicador, cod_empregado, resposta) {
         const indicadores_restantes = await buscaIndicadoresRestantes(cod_empresa, cod_empregado);
         const indicador = indicadores_restantes.find(ir => ir.codigo == cod_indicador);
-        if (!indicador) throw new Error("Indicador inexistente ou já respondido");
+        if (!indicador) throw new Error("Indicador inexistente ou já respondido!");
         const resposta_salva = (await db.query(`
             INSERT INTO indicadores_respostas
             VALUES ($1,$2,$3,$4)

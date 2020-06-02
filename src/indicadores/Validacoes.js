@@ -12,7 +12,7 @@ module.exports = {
         let erros = [];
 
         const numeroRegex = /^[0-9]*$/;
-        if (!numeroRegex.test(cod_indicador)) erros.push({ erro: "Código do indicador inválido" });
+        if (!numeroRegex.test(cod_indicador)) erros.push({ erro: "Código do indicador inválido!" });
 
         if (erros.length > 0) {
             return res.status(400).json({ erros: erros });

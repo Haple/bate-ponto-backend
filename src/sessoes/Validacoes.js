@@ -13,12 +13,12 @@ module.exports = {
         let erros = [];
 
         const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        if (!email || email.trim() == "") erros.push({ erro: "E-mail obrigatório" });
-        if (!emailRegex.test(email)) erros.push({ erro: "E-mail inválido" });
+        if (!email || email.trim() == "") erros.push({ erro: "E-mail obrigatório!" });
+        if (!emailRegex.test(email)) erros.push({ erro: "E-mail inválido!" });
 
         const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-        if (!senha || senha.trim() == "") erros.push({ erro: "Senha obrigatória" });
-        if (!senhaRegex.test(senha)) erros.push({ erro: "Senha inválida" });
+        if (!senha || senha.trim() == "") erros.push({ erro: "Senha obrigatória!" });
+        if (!senhaRegex.test(senha)) erros.push({ erro: "Senha inválida!" });
 
         if (erros.length > 0) {
             return res.status(400).json({ erros: erros });
@@ -29,11 +29,11 @@ module.exports = {
     checaJWT(req, res, next) {
         const token = req.headers['authorization'];
         if (!token) return res.status(401).send({
-            mensagem: "Credencial ausente"
+            mensagem: "Credencial ausente!"
         });
         jwt.verify(token, process.env.SECRET, (erro, resultado) => {
             if (erro) return res.status(401).send({
-                mensagem: 'Credencial inválida'
+                mensagem: 'Credencial inválida!'
             });
             req.usuario = resultado;
             next();
@@ -45,7 +45,7 @@ module.exports = {
             next();
         else
             return res.status(403).json({
-                erro: "Acesso restrito a administradores"
+                erro: "Acesso restrito a administradores!"
             });
     },
     ehEmpregado(req, res, next) {
@@ -54,7 +54,7 @@ module.exports = {
             next();
         else
             return res.status(403).json({
-                erro: "Acesso restrito a empregados"
+                erro: "Acesso restrito a colaboradores!"
             });
     }
 }; 

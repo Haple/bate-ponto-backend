@@ -13,17 +13,17 @@ module.exports = {
             SELECT * FROM empresas
             WHERE cnpj = $1
         `, [cnpj])).rows[0];
-        if (cnpjExistente) throw new Error("CNPJ já cadastrado");
+        if (cnpjExistente) throw new Error("CNPJ já cadastrado!");
         const cpfExistente = (await db.query(`
             SELECT * FROM usuarios
             WHERE cpf = $1
         `, [cpf])).rows[0];
-        if (cpfExistente) throw new Error("CPF já cadastrado");
+        if (cpfExistente) throw new Error("CPF já cadastrado!");
         const emailExistente = (await db.query(`
             SELECT * FROM usuarios
             WHERE email = $1
         `, [email])).rows[0];
-        if (emailExistente) throw new Error("E-mail já cadastrado");
+        if (emailExistente) throw new Error("E-mail já cadastrado!");
     },
     async criarEmpresa(cnpj, razao_social) {
         const empresa = (await db.query(`

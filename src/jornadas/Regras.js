@@ -16,7 +16,7 @@ module.exports = {
           AND ($2 = 0 or cod_empresa = $2)
           `, [cod_jornada, cod_empresa])).rows[0];
         if (!jornada)
-            throw new Error("Jornada não encontrada");
+            throw new Error("Jornada não encontrada!");
         return jornada;
     },
 
@@ -26,7 +26,7 @@ module.exports = {
             WHERE cod_empresa = $1
             AND nome = $2
         `, [cod_empresa, nome])).rows[0];
-        if (jornada) throw new Error("Jornada já cadastrada");
+        if (jornada) throw new Error("Jornada já cadastrada!");
     },
     async criarJornada(cod_empresa, nome, entrada1, saida1, entrada2, saida2) {
         let carga_diaria = diferencaDeHorario(saida1, entrada1);
@@ -61,7 +61,7 @@ module.exports = {
             WHERE cod_empresa = $1
             AND codigo = $2
         `, [cod_empresa, cod_jornada])).rowCount >= 1;
-        if (!deletado) throw new Error("Jornada não encontrada");
+        if (!deletado) throw new Error("Jornada não encontrada!");
     }
 }
 

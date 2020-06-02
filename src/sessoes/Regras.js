@@ -15,11 +15,11 @@ module.exports = {
             WHERE email = $1
             `,
             [email])).rows[0];
-        if (!usuario) throw new Error("Credenciais inválidas");
+        if (!usuario) throw new Error("Credenciais inválidas!");
         const senhaCerta = await bcrypt.compare(senha, usuario.senha);
         delete usuario.senha;
         if (senhaCerta) return usuario;
-        else throw new Error("Credenciais inválidas");
+        else throw new Error("Credenciais inválidas!");
     },
     async buscaEmpregado(cod_usuario) {
         const empregado = (await db.query(`

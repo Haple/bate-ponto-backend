@@ -13,9 +13,9 @@ module.exports = {
 
         let erros = [];
 
-        if (!latitude || latitude.trim() == "") erros.push({ erro: "Latitude obrigatória" });
-        if (!longitude || longitude.trim() == "") erros.push({ erro: "Longitude obrigatória" });
-        if (!localizacao || localizacao.trim() == "") erros.push({ erro: "Localização obrigatória" });
+        if (!latitude || latitude.trim() == "") erros.push({ erro: "Latitude obrigatória!" });
+        if (!longitude || longitude.trim() == "") erros.push({ erro: "Longitude obrigatória!" });
+        if (!localizacao || localizacao.trim() == "") erros.push({ erro: "Localização obrigatória!" });
 
         if (erros.length > 0) {
             return res.status(400).json({ erros: erros });
